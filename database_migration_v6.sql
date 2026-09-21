@@ -1,4 +1,4 @@
--- Wholesale Meat ERP v6 production migration sketch
+-- General Business ERP v6 production migration sketch
 -- This is a PostgreSQL/Supabase-ready design outline for the new accounting UX modules.
 
 create table if not exists close_periods (

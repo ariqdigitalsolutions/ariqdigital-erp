@@ -1,4 +1,4 @@
--- Wholesale Meat ERP v7 production migration add-on
+-- General Business ERP v7 production migration add-on
 -- Covers required-field validation, payroll approvals, payslips, bank payments, dispatch and audit trail.
 
 create table if not exists payroll_requests (
