@@ -2,6 +2,7 @@ module.exports = function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   res.status(200).json({
     url: process.env.SUPABASE_URL || '',
-    anonKey: process.env.SUPABASE_ANON_KEY || ''
+    anonKey: process.env.SUPABASE_ANON_KEY || '',
+    twoFactorEnabled: String(process.env.ENABLE_2FA || 'true').toLowerCase() === 'true'
   });
 };
