@@ -336,7 +336,7 @@ function renderLogin(){
         </div>
         ${verification}
         <div id="db-status" class="db-status ${supabaseReady?'ok':'error'}">${supabaseReady?'Supabase connected':'Connecting to Supabase…'}</div>
-        <p style="color:#6b7280;font-size:13px;margin-top:15px">User accounts, passwords and ERP data are secured by Supabase. Every login requires email verification.</p>
+        <p style="color:#6b7280;font-size:13px;margin-top:15px">User accounts, passwords and ERP data are secured by Supabase. Email 2FA can be enabled or temporarily disabled from the Vercel environment settings.</p>
         <div class="demo-copyright">
           <strong>DEMO VERSION — COPYRIGHT NOTICE</strong>
           This system is provided for demonstration and evaluation purposes only. Access to this demo does not grant ownership, source code rights, resale rights, modification rights, or distribution rights.<br><br>
@@ -365,6 +365,13 @@ async function login(e){
     const {data:profile,error:profileError}=await supabaseClient.from('erp_profiles').select('id,email,full_name,role,active').eq('id',data.user.id).maybeSingle();
     if(profileError) throw profileError;
     if(!profile || profile.active===false) throw new Error('Your ERP account is inactive or has no ERP profile. Contact the administrator.');
+    if(supabaseConfig?.twoFactorEnabled===false){
+      await loadFromSupabase();
+      session={id:profile.id,name:profile.full_name||data.user.user_metadata?.full_name||data.user.email,email:data.user.email,role:profile.role};
+      audit('Login','User completed Supabase Auth password login; email 2FA temporarily disabled');
+      render();
+      return;
+    }
     const response=await fetch('/api/2fa',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${data.session.access_token}`},body:JSON.stringify({action:'send',email:data.user.email,name:profile.full_name||data.user.user_metadata?.full_name||'User'})});
     const result=await response.json().catch(()=>({}));
     await supabaseClient.auth.signOut();
