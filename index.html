@@ -226,7 +226,13 @@ async function initSupabase(){
     }
     supabaseConfig=cfg;
     supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey,{
-      auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}
+      auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:true}
+    });
+    supabaseClient.auth.onAuthStateChange((event, sessionData)=>{
+      if(event==='PASSWORD_RECOVERY'){
+        recoveryMode=true;
+        render();
+      }
     });
     supabaseReady=true;
     updateDbStatus('Supabase connected');
@@ -300,12 +306,53 @@ function glTotals(){ const accounts={}; state.journalEntries.forEach(j=>j.lines.
 
 function render(){
   if(!session) return renderLogin();
-  const nav=[['dashboard','Dashboard'],['pos','Sales & Invoices'],['quotations','Quotations'],['stock','Inventory & Stock'],['purchases','Purchases'],['customers','Customers'],['suppliers','Suppliers'],['cashup','Cashup'],['accounting','ACCOUNTING'],['settings','Settings'],['audit','Audit Logs']].filter(([k])=>can(k));
+  const nav=[['dashboard','Dashboard'],['users','User Management'],['pos','Sales & Invoices'],['quotations','Quotations'],['stock','Inventory & Stock'],['purchases','Purchases'],['customers','Customers'],['suppliers','Suppliers'],['cashup','Cashup'],['accounting','ACCOUNTING'],['settings','Settings'],['audit','Audit Logs']].filter(([k])=>can(k));
   if(!can(currentPage)) currentPage='dashboard';
   document.getElementById('app').innerHTML=`<div class="shell"><aside class="sidebar"><div class="brand"><div class="logo">ME</div><div><h1>General Business ERP</h1><p>Sales • Inventory • Accounting</p></div></div><div class="user-pill"><b>${esc(session.name)}</b><br>${esc(session.role)}<br><small>${esc(session.email)}</small><div id="db-status" class="db-status ok">Supabase synced</div></div><div class="nav">${nav.map(([k,v])=>`<button class="${currentPage===k?'active':''}" onclick="go('${k}')">${v}</button>`).join('')}<button onclick="logout()">Logout</button></div></aside><main class="main"><div class="topbar"><div><h2>${esc(nav.find(n=>n[0]===currentPage)?.[1]||'Dashboard')}</h2><p>${esc(state.settings.companyName)} • ${today()}</p></div><div class="actions no-print"><button class="btn ghost small" onclick="window.print()">Print</button><button class="btn ghost small" onclick="exportJson()">Backup JSON</button></div></div><div id="page"></div></main></div>`;
   pages[currentPage]();
 }
+function renderRecovery(){
+  document.getElementById('app').innerHTML=`
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="brand"><div class="logo">ME</div><div><h1>Reset Password</h1><p>Choose a new ERP password</p></div></div>
+        <form onsubmit="completePasswordRecovery(event)">
+          <div class="form-row"><label>New password</label><input id="recoveryPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+          <div class="form-row"><label>Confirm new password</label><input id="recoveryPassword2" type="password" minlength="8" autocomplete="new-password" required></div>
+          <button class="btn" style="width:100%">Set New Password</button>
+        </form>
+        <div class="notice" style="margin-top:14px">Use at least 8 characters. After changing the password, you will return to the login screen.</div>
+      </div>
+    </div>`;
+}
+async function sendPasswordReset(){
+  if(!supabaseReady) return alert('Supabase is not connected.');
+  const email=document.getElementById('email')?.value.trim().toLowerCase();
+  if(!email) return alert('Enter your email address first.');
+  try{
+    const redirectTo=`${window.location.origin}${window.location.pathname}`;
+    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});
+    if(error) throw error;
+    alert('If that email is registered, a password reset link has been sent. Check your email.');
+  }catch(err){ alert(err.message||'Could not start password recovery.'); }
+}
+async function completePasswordRecovery(e){
+  e.preventDefault();
+  const p1=document.getElementById('recoveryPassword').value;
+  const p2=document.getElementById('recoveryPassword2').value;
+  if(p1.length<8) return alert('Password must be at least 8 characters.');
+  if(p1!==p2) return alert('The passwords do not match.');
+  try{
+    const {error}=await supabaseClient.auth.updateUser({password:p1});
+    if(error) throw error;
+    recoveryMode=false;
+    await supabaseClient.auth.signOut();
+    alert('Password changed successfully. You can now log in with your new password.');
+    renderLogin();
+  }catch(err){ alert(err.message||'Could not change the password.'); }
+}
 function renderLogin(){
+  if(recoveryMode) return renderRecovery();
   const verification = pending2FA ? `
     <div class="notice" style="margin-bottom:14px"><b>Check your registered email.</b><br>A 6-digit verification code was sent to <b>${esc(maskEmail(pending2FA.email))}</b>.</div>
     <form onsubmit="verify2FA(event)">
@@ -319,9 +366,10 @@ function renderLogin(){
     </div>
   ` : `
     <form onsubmit="login(event)">
-      <div class="form-row"><label>Email</label><input id="email" type="email" value="admin@business.erp" autocomplete="username" required></div>
+      <div class="form-row"><label>Email</label><input id="email" type="email" value="" placeholder="you@company.co.zw" autocomplete="username" required></div>
       <div class="form-row"><label>Password</label><input id="password" type="password" autocomplete="current-password" required></div>
       <button class="btn" style="width:100%">Login</button>
+      <button class="btn ghost small" type="button" style="width:100%;margin-top:10px" onclick="sendPasswordReset()">Forgot Password?</button>
     </form>
   `;
   document.getElementById('app').innerHTML=`
@@ -483,7 +531,119 @@ function statusBadge(status){
 function bankReadyForAutoPay(){ return state.settings.bankApiStatus==='Fully Connected'; }
 
 
+
+let userManagementCache=[];
+async function userApi(action,payload={}){
+  const {data}=await supabaseClient.auth.getSession();
+  const token=data?.session?.access_token;
+  if(!token) throw new Error('Your administrator session has expired. Please log in again.');
+  const r=await fetch('/api/users',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},
+    body:JSON.stringify({action,...payload})
+  });
+  const result=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(result.error||'User management request failed.');
+  return result;
+}
+async function loadUsers(){
+  if(role()!=='Admin / Owner') return;
+  const result=await userApi('list');
+  userManagementCache=result.users||[];
+  return userManagementCache;
+}
+function userRoleOptions(selected){
+  return ['Admin / Owner','Accountant','Supervisor','Cashier / Sales Clerk'].map(r=>`<option ${r===selected?'selected':''}>${r}</option>`).join('');
+}
+async function renderUserManagement(){
+  page(`<div class="card"><div class="section-title"><div><h3>User Management</h3><p style="margin:5px 0;color:#6b7280">Create, edit, reset, disable and re-enable ERP accounts without deleting their ERP data.</p></div><button class="btn" onclick="openCreateUserModal()">+ Create User</button></div><div id="usersPanel"><div class="notice">Loading users…</div></div></div>`);
+  try{ await loadUsers(); renderUsersTable(); }catch(err){ document.getElementById('usersPanel').innerHTML=`<div class="notice" style="background:#fee2e2;color:#991b1b">${esc(err.message)}</div>`; }
+}
+function renderUsersTable(){
+  const panel=document.getElementById('usersPanel'); if(!panel) return;
+  const rows=userManagementCache.map(u=>[
+    `<b>${esc(u.full_name||'')}</b>`,
+    esc(u.email),
+    esc(u.role),
+    statusBadge(u.active?'Active':'Disabled'),
+    u.lastSignIn?new Date(u.lastSignIn).toLocaleString():'Never',
+    `<div class="actions">
+      <button class="btn ghost small" onclick="openEditUserModal('${u.id}')">Edit</button>
+      <button class="btn warn small" onclick="openResetUserModal('${u.id}')">Reset Password</button>
+      ${u.id===session.id?'':u.active?`<button class="btn bad small" onclick="toggleUserStatus('${u.id}',false)">Disable</button>`:`<button class="btn good small" onclick="toggleUserStatus('${u.id}',true)">Enable</button>`}
+    </div>`
+  ]);
+  panel.innerHTML=table(['Name','Email','Role','Status','Last login','Actions'],rows)+
+    `<div class="notice" style="margin-top:12px">Disabling an account keeps its Supabase identity, ERP profile and historical transactions. The account can be enabled again later.</div>`;
+}
+function openCreateUserModal(){
+  modal(`<h3>Create ERP Account</h3>
+    <div class="two-col-form">
+      <div class="form-row"><label>Full name</label><input id="umName" required></div>
+      <div class="form-row"><label>Email</label><input id="umEmail" type="email" required></div>
+      <div class="form-row"><label>Role</label><select id="umRole">${userRoleOptions('Cashier / Sales Clerk')}</select></div>
+      <div class="form-row"><label>Temporary password</label><input id="umPassword" type="password" minlength="8" required></div>
+    </div>
+    <div class="notice">The account is created directly in Supabase Auth. Passwords are not stored in ERP tables.</div>
+    <div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn" onclick="createUser()">Create Account</button></div>`);
+}
+async function createUser(){
+  const name=document.getElementById('umName')?.value.trim(), email=document.getElementById('umEmail')?.value.trim().toLowerCase(), roleName=document.getElementById('umRole')?.value, password=document.getElementById('umPassword')?.value;
+  if(!name||!email||!roleName||!password) return alert('Complete all fields.');
+  try{
+    await userApi('create',{fullName:name,email,role:roleName,password});
+    document.querySelector('.modal-backdrop')?.remove();
+    await loadUsers(); renderUsersTable(); audit('User created',`${name} (${email}) — ${roleName}`); alert('User account created.');
+  }catch(err){ alert(err.message); }
+}
+function findManagedUser(id){ return userManagementCache.find(u=>u.id===id); }
+function openEditUserModal(id){
+  const u=findManagedUser(id); if(!u) return;
+  modal(`<h3>Edit User</h3>
+    <div class="two-col-form">
+      <div class="form-row"><label>Full name</label><input id="euName" value="${esc(u.full_name||'')}"></div>
+      <div class="form-row"><label>Email</label><input id="euEmail" type="email" value="${esc(u.email||'')}"></div>
+      <div class="form-row"><label>Role</label><select id="euRole">${userRoleOptions(u.role)}</select></div>
+      <div class="form-row"><label>New password (optional)</label><input id="euPassword" type="password" minlength="8" placeholder="Leave blank to keep current"></div>
+    </div>
+    <div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn" onclick="saveUserEdit('${u.id}')">Save Changes</button></div>`);
+}
+async function saveUserEdit(id){
+  const name=document.getElementById('euName')?.value.trim(), email=document.getElementById('euEmail')?.value.trim().toLowerCase(), roleName=document.getElementById('euRole')?.value, password=document.getElementById('euPassword')?.value;
+  if(!name||!email) return alert('Name and email are required.');
+  try{
+    await userApi('update',{id,fullName:name,email,role:roleName,password:password||undefined});
+    document.querySelector('.modal-backdrop')?.remove();
+    await loadUsers(); renderUsersTable(); audit('User updated',`${name} (${email}) — ${roleName}`); alert('User updated.');
+  }catch(err){ alert(err.message); }
+}
+function openResetUserModal(id){
+  const u=findManagedUser(id); if(!u) return;
+  modal(`<h3>Reset Password</h3><p>Set a new temporary password for <b>${esc(u.email)}</b>.</p>
+    <div class="form-row"><label>New password</label><input id="rpPassword" type="password" minlength="8" required></div>
+    <div class="notice">Give the temporary password to the user securely and ask them to change it after signing in.</div>
+    <div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn warn" onclick="resetManagedPassword('${u.id}')">Reset Password</button></div>`);
+}
+async function resetManagedPassword(id){
+  const password=document.getElementById('rpPassword')?.value;
+  if(!password||password.length<8) return alert('Password must be at least 8 characters.');
+  try{
+    await userApi('resetPassword',{id,password});
+    document.querySelector('.modal-backdrop')?.remove(); audit('User password reset',findManagedUser(id)?.email||id); alert('Password reset successfully.');
+  }catch(err){ alert(err.message); }
+}
+async function toggleUserStatus(id,active){
+  const u=findManagedUser(id); if(!u) return;
+  const action=active?'enable':'disable';
+  if(!confirm(`${active?'Enable':'Disable'} ${u.email}?`)) return;
+  try{
+    await userApi('setStatus',{id,active});
+    await loadUsers(); renderUsersTable(); audit(`User ${action}d`,u.email); alert(`Account ${active?'enabled':'disabled'}.`);
+  }catch(err){ alert(err.message); }
+}
+
 const pages={
+  users(){ renderUserManagement(); },
   dashboard(){
     const todays=state.invoices.filter(inv=>inv.date===today() && (isAccountingUser() || inv.user===session.name));
     const paid=todays.reduce((a,inv)=>a+n(inv.paidBase),0);
