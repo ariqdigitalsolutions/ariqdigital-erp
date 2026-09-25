@@ -2,7 +2,7 @@ const crypto = require('crypto');
 function env(name){return process.env[name]||'';}
 function json(res,status,body){res.statusCode=status;res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(body));}
 function base(){return env('SUPABASE_URL').replace(/\/$/,'');}
-async function adminRequest(path,options={}){const r=await fetch(`${base()}${path}`,{...options,headers:{apikey:env('SUPABASE_SERVICE_ROLE_KEY'),Authorization:`Bearer ${env('SUPABASE_SERVICE_ROLE_KEY')}`,'Content-Type':'application/json',...(options.headers||{})}});const text=await r.text();let data=null;try{data=text?JSON.parse(text):null}catch{data=text;}if(!r.ok){const e=new Error(`Supabase request failed (${r.status})`);e.details=data;throw e;}return data;}
+async function adminRequest(path,options={}){const r=await fetch(`${base()}${path}`,{...options,headers:{apikey:env('SUPABASE_SERVICE_ROLE_KEY'),Authorization:`Bearer ${env('SUPABASE_SERVICE_ROLE_KEY')}`,'Content-Type':'application/json',...(options.headers||{})}});const text=await r.text();let data=null;try{data=text?JSON.parse(text):null}catch{data=text;}if(!r.ok){const detail=data&&typeof data==='object'?(data.message||data.msg||data.error_description||data.error||data.hint||''):'';const e=new Error(detail||`Supabase request failed (${r.status})`);e.status=r.status;e.details=data;throw e;}return data;}
 async function authenticatedUser(token){if(!token)return null;const r=await fetch(`${base()}/auth/v1/user`,{headers:{apikey:env('SUPABASE_ANON_KEY'),Authorization:`Bearer ${token}`}});if(!r.ok)return null;const u=await r.json();return u?.id?u:null;}
 async function profile(id){const rows=await adminRequest(`/rest/v1/erp_profiles?select=id,email,username,full_name,role,active,force_password_change,company_id&id=eq.${encodeURIComponent(id)}&limit=1`);return rows?.[0]||null;}
 async function requireAdmin(req,res){const h=String(req.headers.authorization||'');const token=h.startsWith('Bearer ')?h.slice(7).trim():'';const user=await authenticatedUser(token);if(!user)return null;const p=await profile(user.id);if(!p||p.active===false||p.role!=='Admin / Owner')return null;return {user,profile:p};}
@@ -35,8 +35,20 @@ module.exports=async function handler(req,res){
    const username=cleanUsername(body.username),email=String(body.email||'').trim().toLowerCase(),fullName=String(body.fullName||'').trim(),roleName=cleanRole(body.role);
    if(!username)return json(res,400,{error:'Enter a valid username.'});if(!validEmail(email))return json(res,400,{error:'Enter a valid email address.'});if(!fullName)return json(res,400,{error:'Full name is required.'});if(!roleName)return json(res,400,{error:'Select a valid role.'});
    const existing=await adminRequest(`/rest/v1/erp_profiles?select=id&username=eq.${encodeURIComponent(username)}&limit=1`);if(existing?.length)return json(res,409,{error:'Username already exists.'});
-   const password=tempPassword();const created=await adminRequest('/auth/v1/admin/users',{method:'POST',body:JSON.stringify({email,password,email_confirm:true,user_metadata:{full_name:fullName},app_metadata:{erp_role:roleName}})});
-   await upsertProfile(created.id,email,username,fullName,roleName,true,companyId,true);
+   const password=tempPassword();
+   let created;
+   try{
+    created=await adminRequest('/auth/v1/admin/users',{method:'POST',body:JSON.stringify({email,password,email_confirm:true,user_metadata:{full_name:fullName},app_metadata:{erp_role:roleName}})});
+   }catch(err){
+    if(err.status===422 || err.status===409) return json(res,409,{error:err.message||'An account with this email may already exist. Use a different email address.'});
+    throw err;
+   }
+   try{
+    await upsertProfile(created.id,email,username,fullName,roleName,true,companyId,true);
+   }catch(err){
+    try{await adminRequest(`/auth/v1/admin/users/${encodeURIComponent(created.id)}`,{method:'DELETE'});}catch(cleanupError){console.error('Could not roll back Auth user:',cleanupError);}
+    return json(res,422,{error:err.message||'The user account was created but its ERP profile could not be saved. Run the latest database migration and try again.'});
+   }
    let emailSent=false;try{await sendTempEmail({to:email,name:fullName,username,password});emailSent=true;}catch(mailError){console.warn('Temporary password email was not sent:',mailError?.message||mailError);}
    return json(res,200,{user:{id:created.id,username,email,full_name:fullName,role:roleName,active:true},temporaryPassword:password,emailSent,message:emailSent?'User created. A temporary password was sent to the registered email.':'User created. The temporary password is ready to copy and share manually.'});
   }
