@@ -1,103 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AriQ Digital ERP</title>
-  <style>
-:root{
-  --bg:#f6f7fb;
-  --panel:#ffffff;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --line:#e5e7eb;
-  --primary:#1565C0;
-  --primary-dark:#0D47A1;
-  --accent:#0288D1;
-  --good:#047857;
-  --bad:#b91c1c;
-  --warn:#b45309;
-  --shadow:0 12px 30px rgba(15,23,42,.08);
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-button,input,select,textarea{font:inherit}
-button{border:0;cursor:pointer}
-.login-wrap{min-height:100vh;display:grid;place-items:center;padding:22px;background:linear-gradient(135deg,#062A4D,#1565C0 45%,#111827)}
-.login-card{width:min(500px,100%);background:rgba(255,255,255,.96);border-radius:26px;padding:30px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
-.brand{display:flex;gap:14px;align-items:center;margin-bottom:20px}
-.logo{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--primary),#1976D2);display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px;box-shadow:var(--shadow)}
-.brand h1{margin:0;font-size:24px}.brand p{margin:3px 0 0;color:var(--muted)}
-.form-row{display:grid;gap:7px;margin:12px 0}.form-row label{font-weight:700;font-size:13px;color:#374151}.form-row input,.form-row select,.form-row textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.hint{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:12px;color:#7c2d12;font-size:13px;margin:14px 0}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:12px;background:var(--primary);color:#fff;font-weight:800;border:0}.btn:hover{background:var(--primary-dark)}.btn.secondary,.btn.ghost,.btn.good,.btn.bad,.btn.warn{background:var(--primary);color:#fff;border:0}.btn.secondary:hover,.btn.ghost:hover,.btn.good:hover,.btn.bad:hover,.btn.warn:hover{background:var(--primary-dark)}.btn.small{padding:7px 10px;font-size:13px;border-radius:10px}
-.shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh;transition:grid-template-columns .18s ease}.shell.menu-collapsed{grid-template-columns:1fr}.sidebar{background:#111827;color:#fff;padding:20px;position:sticky;top:0;height:100vh;overflow:auto}.sidebar .brand{margin-bottom:18px}.sidebar .logo{background:linear-gradient(135deg,#42A5F5,#1565C0)}.sidebar h1{font-size:19px}.sidebar p{color:#cbd5e1;font-size:12px}.user-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;margin:14px 0;color:#e5e7eb;font-size:13px}.nav{display:grid;gap:7px}.nav button{width:100%;text-align:left;background:var(--primary);color:#fff;border-radius:12px;padding:11px 12px;font-weight:700}.nav button:hover,.nav button.active{background:var(--primary-dark);color:#fff}.sidebar{transition:transform .18s ease;z-index:30}.shell.menu-collapsed .sidebar{position:fixed;left:0;top:0;width:270px;transform:translateX(-100%);box-shadow:18px 0 45px rgba(0,0,0,.18)}.shell.menu-collapsed.menu-open .sidebar{transform:translateX(0)}.main{padding:22px;overflow:auto;min-width:0}.menu-toggle{position:fixed;top:14px;left:14px;z-index:40;width:42px;height:42px;border-radius:12px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:0 8px 24px rgba(15,23,42,.22)}.menu-toggle:hover{background:#1565C0}.shell:not(.menu-collapsed) .menu-toggle{left:282px}.shell.menu-collapsed .main{width:100%}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.topbar h2{margin:0;font-size:27px}.topbar p{margin:5px 0 0;color:var(--muted)}.grid{display:grid;gap:16px}.grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}.metric h3{margin:0;color:var(--muted);font-size:13px}.metric strong{display:block;font-size:25px;margin-top:8px}.metric span{color:var(--muted);font-size:12px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title h3{margin:0}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap}th{background:#f9fafb;color:#374151;font-weight:900}tr:last-child td{border-bottom:0}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:12px;font-weight:800;color:#374151}.badge.good{background:#dcfce7;color:#166534}.badge.bad{background:#fee2e2;color:#991b1b}.badge.warn{background:#fef3c7;color:#92400e}.actions{display:flex;gap:8px;flex-wrap:wrap}.two-col-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;padding:20px;z-index:20}.modal{width:min(760px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 35px 100px rgba(0,0,0,.35)}.modal header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.modal header h3{margin:0}.close{background:var(--primary);color:#fff;border-radius:12px;padding:8px 11px}.close:hover{background:var(--primary-dark)}.invoice-preview{background:#fff;border:1px solid #d1d5db;padding:18px;border-radius:14px}.totals{display:grid;gap:5px;margin-top:12px}.totals div{display:flex;justify-content:space-between}.receipt-line{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,"Liberation Mono",monospace;border-top:1px dashed #9ca3af;margin-top:10px;padding-top:10px}.notice{padding:12px;border-radius:14px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}.danger-zone{background:#fff1f2;border-color:#fecdd3}.hidden{display:none!important}
-@media(max-width:980px){.shell{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.grid.cols-4,.grid.cols-3,.grid.cols-2,.two-col-form{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}.main{padding:14px}}
-@media print{body{background:#fff}.sidebar,.topbar,.no-print,.btn,.actions{display:none!important}.shell{display:block}.main{padding:0}.card{box-shadow:none;border:0}.invoice-preview{border:0}.table-wrap{border:0}}
-.span2{grid-column:1 / -1}
-.status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-@media(max-width:980px){.span2{grid-column:auto}.status-grid{grid-template-columns:1fr}}
 
-/* v6 accounting UX additions */
-.muted-copy{color:var(--muted);font-size:13px;margin-top:-6px}
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}.filters input,.filters select{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff}.progress-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.donut-card{display:grid;place-items:center;text-align:center;gap:5px;border:1px solid var(--line);border-radius:16px;padding:12px;background:#fafafa}.donut{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--primary) calc(var(--pct)*1%), #e5e7eb 0);position:relative}.donut:after{content:"";position:absolute;width:56px;height:56px;border-radius:50%;background:#fff}.donut span{z-index:1;font-weight:900}.donut-card small{color:var(--muted)}.mini-bars{display:grid;gap:10px;margin-top:16px}.mini-row{display:grid;grid-template-columns:90px 1fr 110px;gap:10px;align-items:center}.mini-track{height:12px;background:#eef2f7;border-radius:999px;overflow:hidden}.mini-track i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:999px}.insight{border:1px solid var(--line);background:#fbfdff;border-radius:16px;padding:14px}.insight ul{margin:8px 0 0 18px;padding:0}.insight li{margin:6px 0}.span2{grid-column:1 / -1}
-@media(max-width:980px){.progress-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.mini-row{grid-template-columns:1fr}.span2{grid-column:auto}}
-
-/* Required-field validation highlighting */
-.field-invalid{border-color:#b91c1c!important;box-shadow:0 0 0 3px rgba(185,28,28,.12)!important;background:#fff7f7!important}
-.field-error-text{display:block;margin-top:4px;color:#b91c1c;font-size:12px;font-weight:700}
-
-/* Demo login copyright/disclaimer */
-.demo-warning{
-  margin:10px 0 12px;
-  padding:9px 10px;
-  background:#fff3cd;
-  color:#856404;
-  border:1px solid #ffeeba;
-  border-radius:10px;
-  font-size:12px;
-  text-align:center;
-  font-weight:800;
-}
-.twofa-code{letter-spacing:.35em;text-align:center;font-size:25px;font-weight:900}.twofa-note{font-size:13px;color:var(--muted);margin:10px 0}.demo-copyright{
-  margin-top:16px;
-  padding:12px;
-  font-size:11px;
-  line-height:1.5;
-  color:#4b5563;
-  background:#f9fafb;
-  border-left:4px solid var(--primary);
-  border-radius:10px;
-  text-align:center;
-}
-.demo-copyright strong{
-  display:block;
-  margin-bottom:4px;
-  color:var(--primary);
-  font-size:12px;
-  letter-spacing:.04em;
-}
-.demo-copyright .copyright-line{
-  display:block;
-  margin-top:8px;
-  color:#111827;
-  font-weight:800;
-}
-
-.db-status{display:inline-block;margin-top:7px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.02em;background:#dcfce7;color:#166534}.db-status.error{background:#fee2e2;color:#991b1b}.db-status.ok{background:#dcfce7;color:#166534}
-</style>
-  <script>
     window.addEventListener('error', function(event) {
       var app = document.getElementById('app');
       if (app && !app.innerHTML.trim()) {
         app.innerHTML = '<div style="font-family:Arial;max-width:760px;margin:40px auto;padding:24px;border:1px solid #fecaca;background:#fff1f2;border-radius:12px;color:#7f1d1d"><h2>AriQ Digital ERP could not start</h2><p><b>Error:</b> '+ String(event.message).replace(/[&<>]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[m];}) +'</p><p>Try extracting the ZIP first, then open index.html again. If it still fails, clear browser storage for this file and reload.</p></div>';
       }
     });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
-  <noscript><div style="font-family:Arial;max-width:760px;margin:40px auto;padding:24px;border:1px solid #ddd;border-radius:12px">Please enable JavaScript to use AriQ Digital ERP.</div></noscript>
-  <div id="app"></div>
-  <script>
+  
+
+
 const ERP_KEY = 'businessERP.v6.intacctInspiredAccountingUX';
 
 function today(){ return new Date().toISOString().slice(0,10); }
@@ -710,7 +620,7 @@ const pages={
   },
   pos(){
     saleCart=saleCart||[];
-    page(`<div class="grid cols-2"><div class="card"><h3>Create Invoice / Cash Sale</h3><div class="notice"><b>EFT rule:</b> Accountant must approve EFT money first. When cashier selects EFT, the approved balance for the selected customer is shown and can be used.</div><div class="two-col-form"><div class="form-row"><label>Customer</label><select id="saleCustomer" onchange="updateEftNotice()">${option(state.customers)}</select></div><div class="form-row"><label>Sale Type</label><select id="saleType"><option>Cash Sale</option><option>Credit Sale</option><option>Invoice</option></select></div><div class="form-row"><label>Stock Deduction</label><select id="deductMode"><option value="sale">Deduct at point of sale</option><option value="dispatch">Deduct at point of dispatch</option></select></div><div class="form-row"><label>Currency</label><select id="saleCurrency" onchange="renderSaleCart()">${state.settings.currencies.map(c=>`<option>${c}</option>`).join('')}</select></div><div class="form-row"><label>Payment Method</label><select id="salePay" onchange="updateEftNotice()"><option>Cash</option><option>Bank</option><option>EcoCash/mobile money</option><option>POS/swipe</option><option>EFT</option><option>Credit sale</option></select></div><div class="form-row"><label>Amount Paid</label><input id="salePaid" type="number" step="0.01" value="0"></div><div class="form-row"><label>Delivery Address</label><input id="saleDelivery" placeholder="Delivery address / collection details"></div><div class="form-row"><label>Driver / Vehicle</label><input id="saleDriver" placeholder="Driver name, vehicle reg"></div></div><div id="eftNotice" class="hint"></div><hr><div class="two-col-form"><div class="form-row"><label>Product</label><select id="lineProduct" onchange="syncLineProduct()">${option(state.products)}</select></div><div class="form-row"><label>Batch</label><select id="lineCarcass"></select></div><div class="form-row"><label>Quantity</label><input id="lineQuantity" type="number" step="0.01" value="10"></div><div class="form-row"><label>Unit price</label><input id="linePrice" type="number" step="0.01"></div><div class="form-row"><label>Discount</label><input id="lineDiscount" type="number" step="0.01" value="0"></div><div class="form-row"><label>Notes</label><input id="lineNotes"></div></div><div class="actions"><button class="btn ghost" onclick="addSaleLine()">Add to Receipt</button><button class="btn ghost" onclick="saleCart=[];loadedQuoteId=null;render()">Clear</button></div></div><div class="card"><h3>Current Invoice ${loadedQuoteId?`from Quotation #${loadedQuoteId}`:''}</h3><div id="saleCartBox"></div></div></div><br><div class="card"><h3>Invoices Waiting for Dispatch</h3>${dispatchTable()}</div><br><div class="card"><h3>Recent Invoices</h3>${invoiceTable(state.invoices.slice(-10).reverse())}</div>`);
+    page(`<div class="grid cols-2"><div class="card"><h3>Create Invoice / Cash Sale</h3><div class="notice"><b>EFT rule:</b> Accountant must approve EFT money first. When cashier selects EFT, the approved balance for the selected customer is shown and can be used.</div><div class="two-col-form"><div class="form-row"><label>Customer</label><select id="saleCustomer" onchange="updateEftNotice()">${option(state.customers)}</select></div><div class="form-row"><label>Sale Type</label><select id="saleType"><option>Cash Sale</option><option>Credit Sale</option><option>Invoice</option></select></div><div class="form-row"><label>Stock Deduction</label><select id="deductMode"><option value="sale">Deduct at point of sale</option><option value="dispatch">Deduct at point of dispatch</option></select></div><div class="form-row"><label>Currency</label><select id="saleCurrency" onchange="renderSaleCart()">${state.settings.currencies.map(c=>`<option>${c}</option>`).join('')}</select></div><div class="form-row"><label>Payment Method</label><select id="salePay" onchange="updateEftNotice()"><option>Cash</option><option>Bank</option><option>EcoCash/mobile money</option><option>POS/swipe</option><option>EFT</option><option>Credit sale</option></select></div><div class="form-row"><label>Amount Paid</label><input id="salePaid" type="number" step="0.01" value="0"></div><div class="form-row"><label>Delivery Address</label><input id="saleDelivery" placeholder="Delivery address / collection details"></div><div class="form-row"><label>Driver / Vehicle</label><input id="saleDriver" placeholder="Driver name, vehicle reg"></div></div><div id="eftNotice" class="hint"></div><hr><div class="two-col-form"><div class="form-row"><label>Product</label><select id="lineProduct" onchange="syncLineProduct()">${option(state.products)}</select></div><div class="form-row"><label>Batch</label><select id="lineCarcass"></select></div><div class="form-row"><label>Quantity</label><input id="lineQuantity" type="number" step="0.01" value="10"></div><div class="form-row"><label>Unit price</label><input id="linePrice" type="number" step="0.01"></div><div class="form-row"><label>Discount</label><input id="lineDiscount" type="number" step="0.01" value="0"></div><div class="form-row"><label>Notes</label><input id="lineNotes"></div></div><div class="actions"><button class="btn ghost" onclick="addSaleLine()">Add Product</button><button class="btn ghost" onclick="saleCart=[];loadedQuoteId=null;render()">Clear</button></div></div><div class="card"><h3>Current Invoice ${loadedQuoteId?`from Quotation #${loadedQuoteId}`:''}</h3><div id="saleCartBox"></div></div></div><br><div class="card"><h3>Invoices Waiting for Dispatch</h3>${dispatchTable()}</div><br><div class="card"><h3>Recent Invoices</h3>${invoiceTable(state.invoices.slice(-10).reverse())}</div>`);
     syncLineProduct(); renderSaleCart(); updateEftNotice();
   },
   quotations(){ page(`<div class="card"><div class="section-title"><h3>Quotations / Proformas</h3><button class="btn" onclick="openQuoteModal()">New Quotation</button></div><div class="notice">Quotations support many different products and can be edited before being converted into an invoice.</div>${quoteTable()}</div>`); },
@@ -764,7 +674,7 @@ function syncLineProduct(){ const p=product(lineProduct?.value); if(!p) return; 
 function addSaleLine(){
   if(!requireFields([[lineProduct,'Product'],[lineQuantity,'Quantity','number',0],[linePrice,'Unit price','number',0]])) return;
   const p=product(lineProduct.value); if(!p) return showFormError('Select a valid product.');
-  const item={id:Date.now(),productId:p.id,productName:p.name,carcassId:lineCarcass?.value||'',qty:n(lineQuantity.value),price:n(linePrice.value),discount:n(lineDiscount.value),notes:lineNotes.value,cost:p.cost};
+  const item={id:Date.now(),productId:p.id,productName:p.name,carcassId:lineBatch.value,qty:n(lineQuantity.value),price:n(linePrice.value),discount:n(lineDiscount.value),notes:lineNotes.value,cost:p.cost};
   const existing=saleCart.find(l=>l.productId===item.productId);
   if(existing){
     existing.qty=n(existing.qty)+n(item.qty);
@@ -780,7 +690,7 @@ function renderSaleCart(){
   const rows=saleCart.map((l,i)=>[l.productName,qty(l.qty),money(l.price),money(l.discount),money(l.qty*l.price-l.discount),`<button class="btn small bad" onclick="saleCart.splice(${i},1);renderSaleCart()">Remove</button>`]);
   const totals=calcLines(saleCart);
   const complete=saleCart.length>0 && document.getElementById('saleCustomer');
-  saleCartBox.innerHTML=`${table(['Product','Quantity','Unit price','Discount','Total',''],rows)}<div class="totals"><div><b>Subtotal:</b><b>${money(totals.subtotal, saleCurrency?.value||'USD')}</b></div><div><b>VAT:</b><b>${money(totals.vat, saleCurrency?.value||'USD')}</b></div><div><b>Total:</b><b>${money(totals.total, saleCurrency?.value||'USD')}</b></div></div><div class="actions" style="margin-top:14px"><button id="postInvoiceBtn" class="btn" ${complete?'':'disabled'} onclick="completeSale()">Post Invoice / Receipt</button></div>`;
+  saleCartBox.innerHTML=`${table(['Product','Quantity','Unit price','Discount','Total',''],rows)}<div class="totals"><div><b>Subtotal:</b><b>${money(totals.subtotal, saleCurrency?.value||'USD')}</b></div><div><b>VAT:</b><b>${money(totals.vat, saleCurrency?.value||'USD')}</b></div><div><b>Total:</b><b>${money(totals.total, saleCurrency?.value||'USD')}</b></div></div><div class="actions" style="margin-top:14px"><button id="postInvoiceBtn" class="btn" ${complete?'':'disabled'} onclick="completeSale()">Post Invoice / Receipt</button></div><p class="hint">The Post Invoice / Receipt button is placed under the current invoice and is blocked until required invoice details are complete.</p>`;
 }
 function calcLines(lines){ const subtotal=lines.reduce((a,l)=>a+(n(l.qty)*n(l.price)-n(l.discount)),0); const vat=state.settings.vatRegistered? subtotal*n(state.settings.vatRate)/100:0; return {subtotal,vat,total:subtotal+vat}; }
 function updateEftNotice(){ if(!document.getElementById('eftNotice')) return; const cid=Number(saleCustomer.value); const bal=approvedEftBalance(cid); eftNotice.innerHTML=`Approved EFT balance for this customer: <b>${money(bal)}</b>${salePay.value==='EFT'?' — EFT can only proceed up to this approved amount.':''}`; }
@@ -1250,6 +1160,3 @@ function subledgerInsightHtml(kind){
   return `<div class="notice" style="margin-top:12px"><b>${kind} Subledger Reconciliation Insight:</b> GL balance ${money(gl)} vs ${kind} subledger ${money(sub)}. Variance: <b>${money(variance)}</b>. ${Math.abs(variance)>0.01?'Review unmatched payments, journals or opening balances.':'No variance detected.'}</div>`;
 }
 
-</script>
-</body>
-</html>
