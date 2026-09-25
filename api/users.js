@@ -9,7 +9,26 @@ async function requireAdmin(req,res){const h=String(req.headers.authorization||'
 function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());}
 function passwordOk(v){return typeof v==='string'&&v.length>=8;}
 function cleanRole(v){const allowed=['Admin / Owner','Accountant','Supervisor','Cashier / Sales Clerk'];return allowed.includes(v)?v:null;}
-function cleanUsername(v){return /^[A-Za-z0-9._-]{3,40}$/.test(String(v||'').trim())?String(v).trim():null;}
+function cleanUsername(v){const s=String(v||'').trim(); if(!s) return null; if(/^[A-Za-z0-9._-]{3,40}$/.test(s)) return s; if(validEmail(s)) return s.toLowerCase(); return null;}
+function usernameBaseFromName(name){
+ const words=String(name||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(Boolean);
+ if(!words.length) return 'user';
+ if(words.length===1) return words[0].slice(0,40) || 'user';
+ const initial=words[0].charAt(0);
+ const surname=words[words.length-1];
+ return `${initial}${surname}`.slice(0,40) || 'user';
+}
+async function generateUniqueUsername(fullName){
+ const base=usernameBaseFromName(fullName);
+ let candidate=base;
+ for(let i=0;i<1000;i++){
+  const rows=await adminRequest(`/rest/v1/erp_profiles?select=id&username=eq.${encodeURIComponent(candidate)}&limit=1`);
+  if(!rows?.length) return candidate;
+  const suffix=String(i+2);
+  candidate=(base.slice(0,40-suffix.length)+suffix).slice(0,40);
+ }
+ throw new Error('Could not generate a unique username. Please try again.');
+}
 function tempPassword(){return crypto.randomBytes(9).toString('base64url')+'A1!';}
 function esc(v){return String(v||'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\':'&#39;'}[c]));}
 async function sendTempEmail({to,name,username,password}){
@@ -32,9 +51,9 @@ module.exports=async function handler(req,res){
   const body=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{});const action=body.action;const companyId=await ensureCompany(admin);
   if(action==='list'){const profiles=await adminRequest('/rest/v1/erp_profiles?select=id,email,username,full_name,role,active,force_password_change,created_at,updated_at&order=created_at.desc');const authUsers=await adminRequest('/auth/v1/admin/users?per_page=1000&page=1');const byId=new Map((authUsers?.users||[]).map(u=>[u.id,u]));return json(res,200,{users:(profiles||[]).filter(p=>p.company_id===companyId).map(p=>({...p,lastSignIn:byId.get(p.id)?.last_sign_in_at||null,emailConfirmed:!!byId.get(p.id)?.email_confirmed_at}))});}
   if(action==='create'){
-   const username=cleanUsername(body.username),email=String(body.email||'').trim().toLowerCase(),fullName=String(body.fullName||'').trim(),roleName=cleanRole(body.role);
-   if(!username)return json(res,400,{error:'Enter a valid username.'});if(!validEmail(email))return json(res,400,{error:'Enter a valid email address.'});if(!fullName)return json(res,400,{error:'Full name is required.'});if(!roleName)return json(res,400,{error:'Select a valid role.'});
-   const existing=await adminRequest(`/rest/v1/erp_profiles?select=id&username=eq.${encodeURIComponent(username)}&limit=1`);if(existing?.length)return json(res,409,{error:'Username already exists.'});
+   const email=String(body.email||'').trim().toLowerCase(),fullName=String(body.fullName||'').trim(),roleName=cleanRole(body.role);
+   if(!validEmail(email))return json(res,400,{error:'Enter a valid email address.'});if(!fullName)return json(res,400,{error:'Full name is required.'});if(!roleName)return json(res,400,{error:'Select a valid role.'});
+   const username=await generateUniqueUsername(fullName);
    const password=tempPassword();
    let created;
    try{
