@@ -37,8 +37,8 @@ module.exports=async function handler(req,res){
    const existing=await adminRequest(`/rest/v1/erp_profiles?select=id&username=eq.${encodeURIComponent(username)}&limit=1`);if(existing?.length)return json(res,409,{error:'Username already exists.'});
    const password=tempPassword();const created=await adminRequest('/auth/v1/admin/users',{method:'POST',body:JSON.stringify({email,password,email_confirm:true,user_metadata:{full_name:fullName},app_metadata:{erp_role:roleName}})});
    await upsertProfile(created.id,email,username,fullName,roleName,true,companyId,true);
-   try{await sendTempEmail({to:email,name:fullName,username,password});}catch(mailError){await adminRequest(`/auth/v1/admin/users/${encodeURIComponent(created.id)}`,{method:'DELETE'}).catch(()=>{});await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(created.id)}`,{method:'DELETE'}).catch(()=>{});throw mailError;}
-   return json(res,200,{user:{id:created.id,username,email,full_name:fullName,role:roleName,active:true},message:'User created. A temporary password was sent to the registered email.'});
+   let emailSent=false;try{await sendTempEmail({to:email,name:fullName,username,password});emailSent=true;}catch(mailError){console.warn('Temporary password email was not sent:',mailError?.message||mailError);}
+   return json(res,200,{user:{id:created.id,username,email,full_name:fullName,role:roleName,active:true},temporaryPassword:password,emailSent,message:emailSent?'User created. A temporary password was sent to the registered email.':'User created. The temporary password is ready to copy and share manually.'});
   }
   if(action==='update'){
    const id=String(body.id||'');const target=await profile(id);if(!target||target.company_id!==companyId)return json(res,404,{error:'User profile not found.'});
@@ -53,7 +53,8 @@ module.exports=async function handler(req,res){
    const id=String(body.id||'');const target=await profile(id);if(!target||target.company_id!==companyId)return json(res,404,{error:'User profile not found.'});const password=tempPassword();
    await adminRequest(`/auth/v1/admin/users/${encodeURIComponent(id)}`,{method:'PUT',body:JSON.stringify({password,email_confirm:true})});
    await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:true,updated_at:new Date().toISOString()})});
-   await sendTempEmail({to:target.email,name:target.full_name,username:target.username,password});return json(res,200,{success:true,message:'Temporary password sent to the registered email.'});
+   let emailSent=false;try{await sendTempEmail({to:target.email,name:target.full_name,username:target.username,password});emailSent=true;}catch(mailError){console.warn('Temporary password email was not sent:',mailError?.message||mailError);}
+   return json(res,200,{success:true,temporaryPassword:password,username:target.username,emailSent,message:emailSent?'Temporary password generated and emailed to the registered email.':'Temporary password generated. Copy it and share it manually.'});
   }
   if(action==='clearForcePassword'){
    const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');const authUser=await authenticatedUser(token);if(!authUser||authUser.id!==admin.user.id)return json(res,403,{error:'Not authorised.'});
