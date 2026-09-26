@@ -286,7 +286,7 @@ function renderForcedPasswordChange(){
 async function changeTemporaryPassword(e){
  e.preventDefault(); const p1=document.getElementById('forcePassword1').value,p2=document.getElementById('forcePassword2').value;
  if(p1.length<8) return alert('Password must be at least 8 characters.'); if(p1!==p2) return alert('Passwords do not match.');
- try{ const {error}=await supabaseClient.auth.updateUser({password:p1}); if(error) throw error; const r=await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${(await supabaseClient.auth.getSession()).data.session?.access_token||''}`},body:JSON.stringify({action:'clearForcePassword'})}); const result=await r.json().catch(()=>({})); if(!r.ok) throw new Error(result.error||'Could not complete password change.'); session.forcePasswordChange=false; audit('Password changed','Temporary password replaced'); render(); }catch(err){alert('Could not change password. Please try again.');}
+ try{ const {error}=await supabaseClient.auth.updateUser({password:p1}); if(error) throw error; const r=await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${(await supabaseClient.auth.getSession()).data.session?.access_token||''}`},body:JSON.stringify({action:'clearForcePassword'})}); const result=await r.json().catch(()=>({})); if(!r.ok) throw new Error(result.error||'Could not complete password change.'); session.forcePasswordChange=false; audit('Password changed','Temporary password replaced'); render(); }catch(err){alert(err?.message||'Could not change password. Please try again.');}
 }
 function renderLogin(){
   if(recoveryMode) return renderRecovery();

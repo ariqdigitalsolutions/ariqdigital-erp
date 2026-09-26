@@ -539,7 +539,23 @@ function renderUsersTable(){
   panel.innerHTML=table(['Name','Username','Email','Role','Status','Last login','Actions'],rows)+'';
 }
 function openCreateUserModal(){
-  modal(`<h3>Create User</h3><div class="two-col-form"><div class="form-row"><label>Username</label><input id="umUsername" required></div><div class="form-row"><label>Full Name</label><input id="umName" required></div><div class="form-row"><label>Email</label><input id="umEmail" type="email" required></div><div class="form-row"><label>Role</label><select id="umRole">${userRoleOptions('Cashier / Sales Clerk')}</select></div></div><div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn" onclick="createUser()">Create User</button></div>`);
+  modal(`<h3>Create User</h3><div class="two-col-form"><div class="form-row"><label>Full Name</label><input id="umName" autocomplete="name" oninput="previewGeneratedUsername()" required></div><div class="form-row"><label>Username</label><input id="umUsername" value="Generated automatically" readonly disabled style="background:#eef5ff;color:#1557a6;font-weight:700"></div><div class="form-row"><label>Email</label><input id="umEmail" type="email" required></div><div class="form-row"><label>Role</label><select id="umRole">${userRoleOptions('Cashier / Sales Clerk')}</select></div></div><div id="generatedUsernamePreview" style="margin-top:10px;font-size:13px;color:#64748b">Enter the full name and the system will generate a unique username.</div><div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn" onclick="createUser()">Create User</button></div>`);
+}
+function generatedUsernameFromName(name){
+  const words=String(name||'').trim().toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(Boolean);
+  if(!words.length) return '';
+  if(words.length===1) return words[0].slice(0,40);
+  const initial=words[0].charAt(0);
+  const surname=words[words.length-1];
+  return `${initial}${surname}`.slice(0,40);
+}
+function previewGeneratedUsername(){
+  const name=document.getElementById('umName')?.value||'';
+  const base=generatedUsernameFromName(name);
+  const field=document.getElementById('umUsername');
+  const preview=document.getElementById('generatedUsernamePreview');
+  if(field) field.value=base||'Generated automatically';
+  if(preview) preview.textContent=base?`Username to be generated: ${base} (the system will add a number if needed).`:'Enter the full name and the system will generate a unique username.';
 }
 async function copyTemporaryPassword(password,button){
  try{ await navigator.clipboard.writeText(password); const old=button.innerHTML; button.innerHTML='Copied'; setTimeout(()=>button.innerHTML=old,1400); }
@@ -557,9 +573,9 @@ function passwordResultModal(title,username,password){
  modal(`<h3>${title}</h3><p>Share these login details with <b>${esc(username||'')}</b>.</p><div class="card" style="margin-top:12px;padding:16px;background:#f8fafc"><div><b>Username:</b> ${esc(username||'')}</div><div style="margin-top:10px"><div style="font-size:12px;color:#64748b">TEMPORARY PASSWORD</div><div style="font-size:22px;font-weight:800;word-break:break-all">${esc(password||'')}</div></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" onclick="copyTemporaryPassword('${safePass}',this)">Copy Password</button><button class="btn" onclick="shareTemporaryPassword('${safeUser}','${safePass}')">Share Login Details</button><button class="btn good" onclick="this.closest('.modal-backdrop').remove()">Done</button></div>`);
 }
 async function createUser(){
- const username=document.getElementById('umUsername')?.value.trim(),name=document.getElementById('umName')?.value.trim(),email=document.getElementById('umEmail')?.value.trim().toLowerCase(),roleName=document.getElementById('umRole')?.value;
- if(!username||!name||!email||!roleName) return alert('Complete all fields.');
- try{ const result=await userApi('create',{username,fullName:name,email,role:roleName}); document.querySelector('.modal-backdrop')?.remove(); await loadUsers(); renderUsersTable(); audit('User created',`${name} (${username}) — ${roleName}`); passwordResultModal('User Created',username,result.temporaryPassword||''); }catch(err){alert('The request could not be completed. Please try again.');}
+ const name=document.getElementById('umName')?.value.trim(),email=document.getElementById('umEmail')?.value.trim().toLowerCase(),roleName=document.getElementById('umRole')?.value;
+ if(!name||!email||!roleName) return alert('Complete all fields.');
+ try{ const result=await userApi('create',{fullName:name,email,role:roleName}); const username=result.username||result.user?.username||generatedUsernameFromName(name); document.querySelector('.modal-backdrop')?.remove(); await loadUsers(); renderUsersTable(); audit('User created',`${name} (${username}) — ${roleName}`); passwordResultModal('User Created',username,result.temporaryPassword||''); }catch(err){alert(err?.message||'The request could not be completed. Please try again.');}
 }
 
 function findManagedUser(id){ return userManagementCache.find(u=>u.id===id); }

@@ -13,8 +13,10 @@ function cleanUsername(v){const s=String(v||'').trim(); if(!s) return null; if(/
 function usernameBaseFromName(name){
  const words=String(name||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(Boolean);
  if(!words.length) return 'user';
- const base=words.length===1?words[0]:`${words[0]}.${words[words.length-1]}`;
- return base.slice(0,40) || 'user';
+ if(words.length===1) return words[0].slice(0,40) || 'user';
+ const initial=words[0].charAt(0);
+ const surname=words[words.length-1];
+ return `${initial}${surname}`.slice(0,40) || 'user';
 }
 async function generateUniqueUsername(fullName){
  const base=usernameBaseFromName(fullName);
@@ -45,8 +47,18 @@ async function upsertProfile(id,email,username,fullName,roleName,active=true,com
 module.exports=async function handler(req,res){
  if(req.method!=='POST')return json(res,405,{error:'Method not allowed'});
  try{
+  const body=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{});const action=body.action;
+  // Password changes for a user's own account are intentionally available to
+  // any authenticated user. They must not be gated by the Admin role.
+  if(action==='clearForcePassword'){
+   const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
+   const authUser=await authenticatedUser(token);
+   if(!authUser)return json(res,401,{error:'Your session has expired. Please sign in again.'});
+   await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(authUser.id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:false,updated_at:new Date().toISOString()})});
+   return json(res,200,{success:true});
+  }
   const admin=await requireAdmin(req,res);if(!admin)return json(res,403,{error:'Administrator access required.'});
-  const body=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{});const action=body.action;const companyId=await ensureCompany(admin);
+  const companyId=await ensureCompany(admin);
   if(action==='list'){const profiles=await adminRequest('/rest/v1/erp_profiles?select=id,email,username,full_name,role,active,force_password_change,created_at,updated_at&order=created_at.desc');const authUsers=await adminRequest('/auth/v1/admin/users?per_page=1000&page=1');const byId=new Map((authUsers?.users||[]).map(u=>[u.id,u]));return json(res,200,{users:(profiles||[]).filter(p=>p.company_id===companyId).map(p=>({...p,lastSignIn:byId.get(p.id)?.last_sign_in_at||null,emailConfirmed:!!byId.get(p.id)?.email_confirmed_at}))});}
   if(action==='create'){
    const email=String(body.email||'').trim().toLowerCase(),fullName=String(body.fullName||'').trim(),roleName=cleanRole(body.role);
@@ -84,10 +96,6 @@ module.exports=async function handler(req,res){
    await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:true,updated_at:new Date().toISOString()})});
    let emailSent=false;try{await sendTempEmail({to:target.email,name:target.full_name,username:target.username,password});emailSent=true;}catch(mailError){console.warn('Temporary password email was not sent:',mailError?.message||mailError);}
    return json(res,200,{success:true,temporaryPassword:password,username:target.username,emailSent,message:emailSent?'Temporary password generated and emailed to the registered email.':'Temporary password generated. Copy it and share it manually.'});
-  }
-  if(action==='clearForcePassword'){
-   const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');const authUser=await authenticatedUser(token);if(!authUser||authUser.id!==admin.user.id)return json(res,403,{error:'Not authorised.'});
-   await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(authUser.id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:false,updated_at:new Date().toISOString()})});return json(res,200,{success:true});
   }
   if(action==='setStatus'){const id=String(body.id||''),active=body.active===true;if(!id)return json(res,400,{error:'User ID is required.'});if(id===admin.user.id&&!active)return json(res,400,{error:'You cannot disable your own administrator account.'});const target=await profile(id);if(!target||target.company_id!==companyId)return json(res,404,{error:'User profile not found.'});await adminRequest(`/auth/v1/admin/users/${encodeURIComponent(id)}`,{method:'PUT',body:JSON.stringify({ban_duration:active?'none':'876000h'})});await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({active,updated_at:new Date().toISOString()})});return json(res,200,{success:true,active});}
   return json(res,400,{error:'Unknown action.'});
