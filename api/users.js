@@ -57,6 +57,30 @@ module.exports=async function handler(req,res){
    await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(authUser.id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:false,updated_at:new Date().toISOString()})});
    return json(res,200,{success:true});
   }
+  if(action==='completeForcePassword'){
+   const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
+   const authUser=await authenticatedUser(token);
+   if(!authUser)return json(res,401,{error:'Your session has expired. Please sign in again.'});
+   const password=String(body.password||'');
+   if(!passwordOk(password))return json(res,400,{error:'Password must be at least 8 characters.'});
+   await adminRequest(`/auth/v1/admin/users/${encodeURIComponent(authUser.id)}`,{method:'PUT',body:JSON.stringify({password,email_confirm:true})});
+   await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(authUser.id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:false,updated_at:new Date().toISOString()})});
+   return json(res,200,{success:true});
+  }
+  if(action==='changePassword'){
+   const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
+   const authUser=await authenticatedUser(token);
+   if(!authUser)return json(res,401,{error:'Your session has expired. Please sign in again.'});
+   const currentPassword=String(body.currentPassword||''),newPassword=String(body.newPassword||'');
+   if(!currentPassword)return json(res,400,{error:'Enter your current password.'});
+   if(!passwordOk(newPassword))return json(res,400,{error:'Password must be at least 8 characters.'});
+   if(currentPassword===newPassword)return json(res,400,{error:'New password must be different from your current password.'});
+   const verify=await fetch(`${base()}/auth/v1/token?grant_type=password`,{method:'POST',headers:{apikey:env('SUPABASE_ANON_KEY'),'Content-Type':'application/json'},body:JSON.stringify({email:authUser.email,password:currentPassword})});
+   if(!verify.ok)return json(res,400,{error:'Current password is incorrect.'});
+   await adminRequest(`/auth/v1/admin/users/${encodeURIComponent(authUser.id)}`,{method:'PUT',body:JSON.stringify({password:newPassword,email_confirm:true})});
+   await adminRequest(`/rest/v1/erp_profiles?id=eq.${encodeURIComponent(authUser.id)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({force_password_change:false,updated_at:new Date().toISOString()})});
+   return json(res,200,{success:true});
+  }
   const admin=await requireAdmin(req,res);if(!admin)return json(res,403,{error:'Administrator access required.'});
   const companyId=await ensureCompany(admin);
   if(action==='list'){const profiles=await adminRequest('/rest/v1/erp_profiles?select=id,email,username,full_name,role,active,force_password_change,created_at,updated_at&order=created_at.desc');const authUsers=await adminRequest('/auth/v1/admin/users?per_page=1000&page=1');const byId=new Map((authUsers?.users||[]).map(u=>[u.id,u]));return json(res,200,{users:(profiles||[]).filter(p=>p.company_id===companyId).map(p=>({...p,lastSignIn:byId.get(p.id)?.last_sign_in_at||null,emailConfirmed:!!byId.get(p.id)?.email_confirmed_at}))});}
