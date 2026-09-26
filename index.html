@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AriQ Digital ERP</title>
+  <title>General Business ERP</title>
   <style>
 :root{
   --bg:#f6f7fb;
@@ -24,12 +24,12 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Sego
 button,input,select,textarea{font:inherit}
 button{border:0;cursor:pointer}
 .login-wrap{min-height:100vh;display:grid;place-items:center;padding:22px;background:linear-gradient(135deg,#062A4D,#1565C0 45%,#111827)}
-.login-card{width:min(500px,100%);background:rgba(255,255,255,.96);border-radius:26px;padding:30px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.login-card{width:min(440px,100%);background:rgba(255,255,255,.96);border-radius:26px;padding:30px;box-shadow:0 30px 90px rgba(0,0,0,.35)}
 .brand{display:flex;gap:14px;align-items:center;margin-bottom:20px}
 .logo{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--primary),#1976D2);display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px;box-shadow:var(--shadow)}
 .brand h1{margin:0;font-size:24px}.brand p{margin:3px 0 0;color:var(--muted)}
-.form-row{display:grid;gap:7px;margin:12px 0}.form-row label{font-weight:700;font-size:13px;color:#374151}.form-row input,.form-row select,.form-row textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.hint{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:12px;color:#7c2d12;font-size:13px;margin:14px 0}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:12px;background:var(--primary);color:#fff;font-weight:800;border:0}.btn:hover{background:var(--primary-dark)}.btn.secondary,.btn.ghost,.btn.good,.btn.bad,.btn.warn{background:var(--primary);color:#fff;border:0}.btn.secondary:hover,.btn.ghost:hover,.btn.good:hover,.btn.bad:hover,.btn.warn:hover{background:var(--primary-dark)}.btn.small{padding:7px 10px;font-size:13px;border-radius:10px}
-.shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh;transition:grid-template-columns .18s ease}.shell.menu-collapsed{grid-template-columns:1fr}.sidebar{background:#111827;color:#fff;padding:20px;position:sticky;top:0;height:100vh;overflow:auto}.sidebar .brand{margin-bottom:18px}.sidebar .logo{background:linear-gradient(135deg,#42A5F5,#1565C0)}.sidebar h1{font-size:19px}.sidebar p{color:#cbd5e1;font-size:12px}.user-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;margin:14px 0;color:#e5e7eb;font-size:13px}.nav{display:grid;gap:7px}.nav button{width:100%;text-align:left;background:var(--primary);color:#fff;border-radius:12px;padding:11px 12px;font-weight:700}.nav button:hover,.nav button.active{background:var(--primary-dark);color:#fff}.sidebar{transition:transform .18s ease;z-index:30}.shell.menu-collapsed .sidebar{position:fixed;left:0;top:0;width:270px;transform:translateX(-100%);box-shadow:18px 0 45px rgba(0,0,0,.18)}.shell.menu-collapsed.menu-open .sidebar{transform:translateX(0)}.main{padding:22px;overflow:auto;min-width:0}.menu-toggle{position:fixed;top:14px;left:14px;z-index:40;width:42px;height:42px;border-radius:12px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:0 8px 24px rgba(15,23,42,.22)}.menu-toggle:hover{background:#1565C0}.shell:not(.menu-collapsed) .menu-toggle{left:282px}.shell.menu-collapsed .main{width:100%}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.topbar h2{margin:0;font-size:27px}.topbar p{margin:5px 0 0;color:var(--muted)}.grid{display:grid;gap:16px}.grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}.metric h3{margin:0;color:var(--muted);font-size:13px}.metric strong{display:block;font-size:25px;margin-top:8px}.metric span{color:var(--muted);font-size:12px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title h3{margin:0}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap}th{background:#f9fafb;color:#374151;font-weight:900}tr:last-child td{border-bottom:0}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:12px;font-weight:800;color:#374151}.badge.good{background:#dcfce7;color:#166534}.badge.bad{background:#fee2e2;color:#991b1b}.badge.warn{background:#fef3c7;color:#92400e}.actions{display:flex;gap:8px;flex-wrap:wrap}.two-col-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;padding:20px;z-index:20}.modal{width:min(760px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 35px 100px rgba(0,0,0,.35)}.modal header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.modal header h3{margin:0}.close{background:var(--primary);color:#fff;border-radius:12px;padding:8px 11px}.close:hover{background:var(--primary-dark)}.invoice-preview{background:#fff;border:1px solid #d1d5db;padding:18px;border-radius:14px}.totals{display:grid;gap:5px;margin-top:12px}.totals div{display:flex;justify-content:space-between}.receipt-line{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,"Liberation Mono",monospace;border-top:1px dashed #9ca3af;margin-top:10px;padding-top:10px}.notice{padding:12px;border-radius:14px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}.danger-zone{background:#fff1f2;border-color:#fecdd3}.hidden{display:none!important}
+.form-row{display:grid;gap:7px;margin:12px 0}.form-row label{font-weight:700;font-size:13px;color:#374151}.form-row input,.form-row select,.form-row textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.hint{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:12px;color:#7c2d12;font-size:13px;margin:14px 0}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:12px;background:var(--primary);color:#fff;font-weight:800}.btn:hover{background:var(--primary-dark)}.btn.secondary{background:#111827}.btn.ghost{background:#fff;color:#111827;border:1px solid var(--line)}.btn.good{background:var(--good)}.btn.bad{background:var(--bad)}.btn.warn{background:var(--warn)}.btn.small{padding:7px 10px;font-size:13px;border-radius:10px}
+.shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh}.sidebar{background:#111827;color:#fff;padding:20px;position:sticky;top:0;height:100vh;overflow:auto}.sidebar .brand{margin-bottom:18px}.sidebar .logo{background:linear-gradient(135deg,#42A5F5,#1565C0)}.sidebar h1{font-size:19px}.sidebar p{color:#cbd5e1;font-size:12px}.user-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;margin:14px 0;color:#e5e7eb;font-size:13px}.nav{display:grid;gap:7px}.nav button{width:100%;text-align:left;background:transparent;color:#e5e7eb;border-radius:12px;padding:11px 12px;font-weight:700}.nav button:hover,.nav button.active{background:rgba(255,255,255,.12);color:#fff}.main{padding:22px;overflow:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.topbar h2{margin:0;font-size:27px}.topbar p{margin:5px 0 0;color:var(--muted)}.grid{display:grid;gap:16px}.grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}.metric h3{margin:0;color:var(--muted);font-size:13px}.metric strong{display:block;font-size:25px;margin-top:8px}.metric span{color:var(--muted);font-size:12px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-title h3{margin:0}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap}th{background:#f9fafb;color:#374151;font-weight:900}tr:last-child td{border-bottom:0}.badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:12px;font-weight:800;color:#374151}.badge.good{background:#dcfce7;color:#166534}.badge.bad{background:#fee2e2;color:#991b1b}.badge.warn{background:#fef3c7;color:#92400e}.actions{display:flex;gap:8px;flex-wrap:wrap}.two-col-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.55);display:grid;place-items:center;padding:20px;z-index:20}.modal{width:min(760px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:20px;box-shadow:0 35px 100px rgba(0,0,0,.35)}.modal header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.modal header h3{margin:0}.close{background:#f3f4f6;border-radius:12px;padding:8px 11px}.invoice-preview{background:#fff;border:1px solid #d1d5db;padding:18px;border-radius:14px}.totals{display:grid;gap:5px;margin-top:12px}.totals div{display:flex;justify-content:space-between}.receipt-line{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,"Liberation Mono",monospace;border-top:1px dashed #9ca3af;margin-top:10px;padding-top:10px}.notice{padding:12px;border-radius:14px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}.danger-zone{background:#fff1f2;border-color:#fecdd3}.hidden{display:none!important}
 @media(max-width:980px){.shell{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.grid.cols-4,.grid.cols-3,.grid.cols-2,.two-col-form{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}.main{padding:14px}}
 @media print{body{background:#fff}.sidebar,.topbar,.no-print,.btn,.actions{display:none!important}.shell{display:block}.main{padding:0}.card{box-shadow:none;border:0}.invoice-preview{border:0}.table-wrap{border:0}}
 .span2{grid-column:1 / -1}
@@ -57,7 +57,7 @@ button{border:0;cursor:pointer}
   text-align:center;
   font-weight:800;
 }
-.twofa-code{letter-spacing:.35em;text-align:center;font-size:25px;font-weight:900}.twofa-note{font-size:13px;color:var(--muted);margin:10px 0}.demo-copyright{
+.demo-copyright{
   margin-top:16px;
   padding:12px;
   font-size:11px;
@@ -82,20 +82,18 @@ button{border:0;cursor:pointer}
   font-weight:800;
 }
 
-.db-status{display:inline-block;margin-top:7px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.02em;background:#dcfce7;color:#166534}.db-status.error{background:#fee2e2;color:#991b1b}.db-status.ok{background:#dcfce7;color:#166534}
 </style>
   <script>
     window.addEventListener('error', function(event) {
       var app = document.getElementById('app');
       if (app && !app.innerHTML.trim()) {
-        app.innerHTML = '<div style="font-family:Arial;max-width:760px;margin:40px auto;padding:24px;border:1px solid #fecaca;background:#fff1f2;border-radius:12px;color:#7f1d1d"><h2>AriQ Digital ERP could not start</h2><p><b>Error:</b> '+ String(event.message).replace(/[&<>]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[m];}) +'</p><p>Try extracting the ZIP first, then open index.html again. If it still fails, clear browser storage for this file and reload.</p></div>';
+        app.innerHTML = '<div style="font-family:Arial;max-width:760px;margin:40px auto;padding:24px;border:1px solid #fecaca;background:#fff1f2;border-radius:12px;color:#7f1d1d"><h2>General Business ERP could not start</h2><p><b>Error:</b> '+ String(event.message).replace(/[&<>]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[m];}) +'</p><p>Try extracting the ZIP first, then open index.html again. If it still fails, clear browser storage for this file and reload.</p></div>';
       }
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <noscript><div style="font-family:Arial;max-width:760px;margin:40px auto;padding:24px;border:1px solid #ddd;border-radius:12px">Please enable JavaScript to use AriQ Digital ERP.</div></noscript>
+  <noscript><div style="font-family:Arial;max-width:760px;margin:40px auto;padding:24px;border:1px solid #ddd;border-radius:12px">Please enable JavaScript to use General Business ERP.</div></noscript>
   <div id="app"></div>
   <script>
 const ERP_KEY = 'businessERP.v6.intacctInspiredAccountingUX';
@@ -124,11 +122,17 @@ const defaultAccounts = [
 
 const defaultData = {
   settings:{
-    companyName:'AriQ Digital ERP Demo', phone:'+263 77 000 0000', address:'Bulawayo, Zimbabwe', invoiceFooter:'Thank you for your business.',
+    companyName:'General Business ERP Demo', phone:'+263 77 000 0000', address:'Bulawayo, Zimbabwe', invoiceFooter:'Thank you for your business.',
     vatRegistered:false, vatNumber:'', tin:'', vatRate:15.5, vatMethod:'exclusive', fiscalEnabled:false, fiscalMode:'Disabled', fiscalDeviceId:'', fiscalSerial:'', activationKey:'', branchName:'Main Branch', zimraEndpoint:'',
     nextQuote:501, nextInvoice:1001, nextPR:201, nextPO:301, nextGRV:401, nextSupplierInvoice:701, nextPayroll:801, nextReceipt:9001,
     currencies:['USD','ZWG','ZAR'], rates:{USD:1,ZWG:25,ZAR:18}, bankSyncEnabled:false, bankName:'', bankAccount:'', bankBranch:'', bankCurrency:'USD', bankClientId:'', bankClientSecret:'', bankApiEndpoint:'', bankTokenEndpoint:'', bankWebhookUrl:'', bankApiStatus:'Not Connected', bankAuthStatus:'Not tested', bankAccountStatus:'Not tested', bankBalanceStatus:'Not tested', bankStatementStatus:'Not tested', bankPaymentStatus:'Not tested', bankWebhookStatus:'Not tested', bankLastSync:'Never', bankReadOnly:false, bankAvailableBalance:0
   },
+  users:[
+    {id:1,name:'Admin User',email:'admin@business.erp',password:'123456',role:'Admin / Owner',active:true},
+    {id:2,name:'Supervisor',email:'supervisor@business.erp',password:'123456',role:'Supervisor',active:true},
+    {id:3,name:'Accountant',email:'accountant@business.erp',password:'123456',role:'Accountant',active:true},
+    {id:4,name:'Cashier',email:'cashier@business.erp',password:'123456',role:'Cashier / Sales Clerk',active:true}
+  ],
   products:[
     {id:1,name:'Laptop Computer',category:'Electronics',uom:'pcs',sell:850,cost:650,tax:'standard rated',hs:'8471',low:5,active:true},
     {id:2,name:'Office Printer',category:'Office Equipment',uom:'pcs',sell:320,cost:240,tax:'standard rated',hs:'8443',low:3,active:true},
@@ -155,17 +159,9 @@ const defaultData = {
   expenses:[], cashups:[], journalEntries:[], payrollRuns:[], payrollRequests:[], payslips:[], bankPaymentRequests:[], bankTransactions:[], reconciliations:[], assets:[], fiscalQueue:[], auditLogs:[]
 };
 
-let state = migrate(structuredClone(defaultData));
-let session = null;
-let supabaseClient = null;
-let supabaseReady = false;
-let supabaseConfig = null;
-let dbSaveTimer = null;
+let state = load();
+let session = JSON.parse(localStorage.getItem('businessERP.session') || 'null');
 let currentPage = 'dashboard';
-let menuCollapsed = false;
-let menuPointerBound = false;
-let recoveryMode = false;
-let pending2FA = null;
 let accountingTab = 'overview';
 let quoteLines = [];
 let saleCart = [];
@@ -173,8 +169,6 @@ let editQuoteId = null;
 let loadedQuoteId = null;
 
 function migrate(d){
-  // Legacy application-level users/passwords are intentionally discarded. Authentication is handled by the application authentication service.
-  delete d.users;
   const arrays=['products','customers','suppliers','employees','accounts','batches','stockMovements','quotations','invoices','invoiceItems','dispatches','receipts','eftDeposits','purchaseRequisitions','purchaseOrders','supplierInvoices','grvs','supplierPayments','expenses','cashups','journalEntries','payrollRuns','payrollRequests','payslips','bankPaymentRequests','bankTransactions','reconciliations','assets','fiscalQueue','auditLogs'];
   arrays.forEach(k=>{ if(!Array.isArray(d[k])) d[k]=structuredClone(defaultData[k]||[]); });
   d.settings={...defaultData.settings,...(d.settings||{}),rates:{...defaultData.settings.rates,...(d.settings?.rates||{})}};
@@ -183,92 +177,16 @@ function migrate(d){
   d.employees.forEach((e,i)=>{ if(e.employeeNo===undefined) e.employeeNo=`EMP-${String(i+1).padStart(3,'0')}`; if(e.nationalId===undefined) e.nationalId=''; if(e.email===undefined) e.email=''; if(e.address===undefined) e.address=''; if(e.department===undefined) e.department=e.role||''; if(e.employmentType===undefined) e.employmentType='Full-time'; if(e.startDate===undefined) e.startDate=today(); if(e.branch===undefined) e.branch=''; if(e.accountType===undefined) e.accountType='Current'; if(e.hourlyRate===undefined) e.hourlyRate=0; if(e.overtime===undefined) e.overtime=0; if(e.bonus===undefined) e.bonus=0; if(e.advances===undefined) e.advances=0; if(e.loans===undefined) e.loans=0; if(e.paye===undefined) e.paye=0; if(e.nssa===undefined) e.nssa=0; });
   return d;
 }
-function load(){ return migrate(structuredClone(defaultData)); }
-async function save(){
-  if(!supabaseClient || !supabaseReady) return false;
-  clearTimeout(dbSaveTimer);
-  dbSaveTimer=setTimeout(async()=>{
-    try{
-      const tenantKey = session?.companyId ? `${session.companyId}:main` : 'main';
-      const {error}=await supabaseClient.from('erp_state').upsert({id:tenantKey,company_id:session?.companyId||null,data:state,updated_at:new Date().toISOString()});
-      if(error) console.error('Data save failed.');
-    }catch(err){ console.error(err); }
-  },150);
-  return true;
-}
-async function loadFromSupabase(){
-  if(!supabaseClient) return;
-  const tenantKey = session?.companyId ? `${session.companyId}:main` : 'main';
-  const {data,error}=await supabaseClient.from('erp_state').select('data').eq('id',tenantKey).maybeSingle();
-  if(error) throw error;
-  if(data?.data && Object.keys(data.data).length){
-    state=migrate(data.data);
-    return;
-  }
-
-  // Preserve data from the pre-multitenant system when a tenant row does not exist yet.
-  // The v8 migration introduced company-scoped keys, so older data may still live under `main`.
-  if(session?.companyId && tenantKey !== 'main'){
-    try{
-      const legacy=await supabaseClient.from('erp_state').select('data').eq('id','main').maybeSingle();
-      if(!legacy.error && legacy.data?.data && Object.keys(legacy.data.data).length){
-        state=migrate(legacy.data.data);
-        const {error:copyError}=await supabaseClient.from('erp_state').upsert({id:tenantKey,company_id:session.companyId,data:state,updated_at:new Date().toISOString()});
-        if(copyError) throw copyError;
-        return;
-      }
-    }catch(copyErr){
-      console.warn('Legacy ERP state migration skipped:',copyErr);
-    }
-  }
-
-  state=migrate(structuredClone(defaultData));
-  const {error:saveError}=await supabaseClient.from('erp_state').upsert({id:tenantKey,company_id:session?.companyId||null,data:state,updated_at:new Date().toISOString()});
-  if(saveError) throw saveError;
-}
-async function getMyProfile(){
-  const {data:userResult,error:userError}=await supabaseClient.auth.getUser();
-  if(userError || !userResult?.user) throw userError || new Error('No authenticated user.');
-  const {data:profile,error:profileError}=await supabaseClient.from('erp_profiles').select('id,email,username,full_name,role,active,force_password_change,company_id').eq('id',userResult.user.id).maybeSingle();
-  if(profileError) throw profileError;
-  if(!profile || profile.active===false) throw new Error('Your ERP account is inactive or has no ERP profile. Contact the administrator.');
-  return {authUser:userResult.user,profile};
-}
-async function initSupabase(){
-  try{
-    let cfg=window.SUPABASE_CONFIG||null;
-    if(!cfg || !cfg.url || !cfg.anonKey){
-      const r=await fetch('/api/config',{cache:'no-store'});
-      if(r.ok) cfg=await r.json();
-    }
-    if(!cfg?.url || !cfg?.anonKey){
-      return false;
-    }
-    supabaseConfig=cfg;
-    supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey,{
-      auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:true}
-    });
-    supabaseClient.auth.onAuthStateChange((event, sessionData)=>{
-      if(event==='PASSWORD_RECOVERY'){
-        recoveryMode=true;
-        render();
-      }
-    });
-    supabaseReady=true;
-    return true;
-  }catch(err){
-    console.error('Application initialization failed.');
-    return false;
-  }
-}
-function resetDemo(){ if(confirm('Reset all ERP data?')){ state=migrate(structuredClone(defaultData)); save(); render(); } }
+function load(){ const raw=localStorage.getItem(ERP_KEY); if(!raw){ localStorage.setItem(ERP_KEY, JSON.stringify(defaultData)); return structuredClone(defaultData); } return migrate(JSON.parse(raw)); }
+function save(){ localStorage.setItem(ERP_KEY, JSON.stringify(state)); }
+function resetDemo(){ if(confirm('Reset all demo data?')){ localStorage.removeItem(ERP_KEY); localStorage.removeItem('businessERP.session'); session=null; state=load(); render(); } }
 
 function role(){ return session?.role||''; }
 function isAccountingUser(){ return ['Admin / Owner','Accountant'].includes(role()); }
 function can(page){
   const r=role();
   if(r==='Admin / Owner') return true;
-  if(r==='Accountant') return ['dashboard','customers','suppliers','purchases','cashup','accounting','audit'].includes(page);
+  if(r==='Accountant') return ['dashboard','customers','suppliers','purchases','cashup','accounting','settings','audit'].includes(page);
   if(r==='Supervisor') return ['dashboard','pos','quotations','stock','purchases','customers','suppliers','cashup'].includes(page);
   if(r==='Cashier / Sales Clerk') return ['dashboard','pos','quotations','customers','cashup'].includes(page);
   return false;
@@ -324,112 +242,41 @@ function glTotals(){ const accounts={}; state.journalEntries.forEach(j=>j.lines.
 
 function render(){
   if(!session) return renderLogin();
-  if(session.forcePasswordChange) return renderForcedPasswordChange();
-  const nav=[['dashboard','Dashboard'],['users','User Management'],['pos','Sales & Invoices'],['quotations','Quotations'],['stock','Inventory & Stock'],['purchases','Purchases'],['customers','Customers'],['suppliers','Suppliers'],['cashup','Cashup'],['accounting','ACCOUNTING'],['settings','Settings'],['audit','Audit Logs']].filter(([k])=>can(k));
+  const nav=[['dashboard','Dashboard'],['pos','Sales & Invoices'],['quotations','Quotations'],['stock','Inventory & Stock'],['purchases','Purchases'],['customers','Customers'],['suppliers','Suppliers'],['cashup','Cashup'],['accounting','ACCOUNTING'],['settings','Settings'],['audit','Audit Logs']].filter(([k])=>can(k));
   if(!can(currentPage)) currentPage='dashboard';
-  document.getElementById('app').innerHTML=`<div class="shell ${menuCollapsed?'menu-collapsed':''}" id="erp-shell"><button class="menu-toggle no-print" aria-label="Toggle menu" title="Toggle menu" onclick="toggleMenu()">☰</button><aside class="sidebar"><div class="brand"><div class="logo">AQ</div><div><h1>AriQ Digital ERP</h1></div></div><div class="user-pill"><b>${esc(session.name)}</b><br>${esc(session.role)}<br><small>${esc(session.email)}</small></div><div class="nav">${nav.map(([k,v])=>`<button class="${currentPage===k?'active':''}" onclick="go('${k}')">${v}</button>`).join('')}<button onclick="logout()">Logout</button></div></aside><main class="main"><div class="topbar"><div><h2>${esc(nav.find(n=>n[0]===currentPage)?.[1]||'Dashboard')}</h2><p>${esc(state.settings.companyName)} • ${today()}</p></div><div class="actions no-print"><button class="btn ghost small" onclick="openChangePasswordModal()">Change Password</button><button class="btn ghost small" onclick="window.print()">Print</button><button class="btn ghost small" onclick="exportJson()">Backup JSON</button></div></div><div id="page"></div></main></div>`;
+  document.getElementById('app').innerHTML=`<div class="shell"><aside class="sidebar"><div class="brand"><div class="logo">ME</div><div><h1>General Business ERP</h1><p>Sales • Inventory • Accounting</p></div></div><div class="user-pill"><b>${esc(session.name)}</b><br>${esc(session.role)}<br><small>${esc(session.email)}</small></div><div class="nav">${nav.map(([k,v])=>`<button class="${currentPage===k?'active':''}" onclick="go('${k}')">${v}</button>`).join('')}<button onclick="logout()">Logout</button></div></aside><main class="main"><div class="topbar"><div><h2>${esc(nav.find(n=>n[0]===currentPage)?.[1]||'Dashboard')}</h2><p>${esc(state.settings.companyName)} • ${today()}</p></div><div class="actions no-print"><button class="btn ghost small" onclick="window.print()">Print</button><button class="btn ghost small" onclick="exportJson()">Backup JSON</button></div></div><div id="page"></div></main></div>`;
   pages[currentPage]();
 }
-function renderRecovery(){
-  document.getElementById('app').innerHTML=`
-    <div class="login-wrap">
-      <div class="login-card">
-        <div class="brand"><div class="logo">AQ</div><div><h1>Reset Password</h1><p>Choose a new ERP password</p></div></div>
-        <form onsubmit="completePasswordRecovery(event)">
-          <div class="form-row"><label>New password</label><input id="recoveryPassword" type="password" minlength="8" autocomplete="new-password" required></div>
-          <div class="form-row"><label>Confirm new password</label><input id="recoveryPassword2" type="password" minlength="8" autocomplete="new-password" required></div>
-          <button class="btn" style="width:100%">Set New Password</button>
-        </form>
-        <div class="notice" style="margin-top:14px">Use at least 8 characters. After changing the password, you will return to the login screen.</div>
-      </div>
-    </div>`;
-}
-async function sendPasswordReset(){
-  if(!supabaseReady) return alert('The service is temporarily unavailable. Please try again.');
-  const email=document.getElementById('email')?.value.trim().toLowerCase();
-  if(!email) return alert('Enter your email address first.');
-  try{
-    const redirectTo=`${window.location.origin}${window.location.pathname}`;
-    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo});
-    if(error) throw error;
-    alert('If that email is registered, a password reset link has been sent. Check your email.');
-  }catch(err){ alert('Could not start password recovery. Please try again.'); }
-}
-async function completePasswordRecovery(e){
-  e.preventDefault();
-  const p1=document.getElementById('recoveryPassword').value;
-  const p2=document.getElementById('recoveryPassword2').value;
-  if(p1.length<8) return alert('Password must be at least 8 characters.');
-  if(p1!==p2) return alert('The passwords do not match.');
-  try{
-    const {error}=await supabaseClient.auth.updateUser({password:p1});
-    if(error) throw error;
-    recoveryMode=false;
-    await supabaseClient.auth.signOut();
-    alert('Password changed successfully. You can now log in with your new password.');
-    renderLogin();
-  }catch(err){ alert('Could not change the password. Please try again.'); }
-}
-function renderForcedPasswordChange(){
-  document.getElementById('app').innerHTML=`<div class="login-wrap"><div class="login-card"><div class="brand"><div class="logo">AQ</div><div><h1>Change Password</h1></div></div><form onsubmit="changeTemporaryPassword(event)"><div class="form-row"><label>New Password</label><input id="forcePassword1" type="password" minlength="8" autocomplete="new-password" required></div><div class="form-row"><label>Confirm Password</label><input id="forcePassword2" type="password" minlength="8" autocomplete="new-password" required></div><button class="btn" style="width:100%">Change Password</button></form></div></div>`;
-}
-async function changeTemporaryPassword(e){
- e.preventDefault(); const p1=document.getElementById('forcePassword1').value,p2=document.getElementById('forcePassword2').value;
- if(p1.length<8) return alert('Password must be at least 8 characters.'); if(p1!==p2) return alert('Passwords do not match.');
- try{
-  const token=(await supabaseClient.auth.getSession()).data.session?.access_token||'';
-  const r=await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({action:'completeForcePassword',password:p1})});
-  const result=await r.json().catch(()=>({})); if(!r.ok) throw new Error(result.error||'Could not change password. Please try again.');
-  session.forcePasswordChange=false; audit('Password changed','Temporary password replaced'); render();
- }catch(err){alert(err?.message||'Could not change password. Please try again.');}
-}
-function openChangePasswordModal(){
- modal(`<h3>Change Password</h3><div class="two-col-form"><div class="form-row span2"><label>Current Password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div><div class="form-row"><label>New Password</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div><div class="form-row"><label>Confirm New Password</label><input id="confirmNewPassword" type="password" minlength="8" autocomplete="new-password" required></div></div><div class="actions"><button class="btn" onclick="submitUserPasswordChange()">Change Password</button><button class="btn ghost" onclick="document.querySelector('.modal-backdrop')?.remove()">Cancel</button></div>`);
-}
-async function submitUserPasswordChange(){
- const current=document.getElementById('currentPassword')?.value||'',p1=document.getElementById('newPassword')?.value||'',p2=document.getElementById('confirmNewPassword')?.value||'';
- if(!current) return alert('Enter your current password.'); if(p1.length<8) return alert('Password must be at least 8 characters.'); if(p1!==p2) return alert('Passwords do not match.');
- try{
-  const token=(await supabaseClient.auth.getSession()).data.session?.access_token||'';
-  const r=await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({action:'changePassword',currentPassword:current,newPassword:p1})});
-  const result=await r.json().catch(()=>({})); if(!r.ok) throw new Error(result.error||'Could not change password. Please try again.');
-  document.querySelector('.modal-backdrop')?.remove(); audit('Password changed','User changed password from the ERP'); alert('Password changed successfully.');
- }catch(err){alert(err?.message||'Could not change password. Please try again.');}
-}
 function renderLogin(){
-  if(recoveryMode) return renderRecovery();
-  const verification = pending2FA ? `
-    <div class="notice" style="margin-bottom:14px"><b>Check your registered email.</b><br>A 6-digit verification code was sent to <b>${esc(maskEmail(pending2FA.email))}</b>.</div>
-    <form onsubmit="verify2FA(event)">
-      <div class="form-row"><label>Verification code</label><input id="twofaCode" class="twofa-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="\d{6}" placeholder="000000" required autofocus></div>
-      <div class="twofa-note">The code expires in 10 minutes and can only be used once.</div>
-      <button class="btn" style="width:100%">Verify &amp; Continue</button>
-    </form>
-    <div class="actions" style="margin-top:12px;justify-content:space-between">
-      <button class="btn ghost small" type="button" onclick="cancel2FA()">Back to login</button>
-      <button class="btn secondary small" type="button" onclick="resend2FA()">Resend code</button>
-    </div>
-  ` : `
-    <form onsubmit="login(event)">
-      <div class="form-row"><label>Username</label><input id="username" value="" autocomplete="username" required></div>
-      <div class="form-row"><label>Password</label><input id="password" type="password" autocomplete="current-password" required></div>
-      <button class="btn" style="width:100%">Login</button>
-      <button class="btn ghost small" type="button" style="width:100%;margin-top:10px" onclick="sendPasswordReset()">Forgot Password?</button>
-    </form>
-  `;
   document.getElementById('app').innerHTML=`
     <div class="login-wrap">
       <div class="login-card">
         <div class="brand">
-          <div class="logo">AQ</div>
+          <div class="logo">ME</div>
           <div>
-            <h1>AriQ Digital ERP</h1>
-            
+            <h1>General Business ERP</h1>
+            <p>General business management system</p>
           </div>
         </div>
-        ${verification}
-        
-        
+
+        <div class="demo-warning">Demo access only. Source code is not included.</div>
+
+        <div class="hint">
+          <b>Demo logins:</b><br>
+          admin@business.erp / 123456<br>
+          supervisor@business.erp / 123456<br>
+          accountant@business.erp / 123456<br>
+          cashier@business.erp / 123456
+        </div>
+
+        <form onsubmit="login(event)">
+          <div class="form-row"><label>Email</label><input id="email" value="admin@business.erp" required></div>
+          <div class="form-row"><label>Password</label><input id="password" type="password" value="123456" required></div>
+          <button class="btn" style="width:100%">Login</button>
+        </form>
+
+        <p style="color:#6b7280;font-size:13px;margin-top:15px">Demo uses browser storage. Connect to Supabase/PostgreSQL before live use.</p>
+
         <div class="demo-copyright">
           <strong>DEMO VERSION — COPYRIGHT NOTICE</strong>
           This system is provided for demonstration and evaluation purposes only. Access to this demo does not grant ownership, source code rights, resale rights, modification rights, or distribution rights.<br><br>
@@ -439,129 +286,9 @@ function renderLogin(){
       </div>
     </div>`;
 }
-function maskEmail(email){
-  const [local,domain]=String(email||'').split('@');
-  if(!domain) return email;
-  const shown=local.length<=2?local.charAt(0):local.slice(0,2);
-  return `${shown}${'*'.repeat(Math.max(1,local.length-shown.length))}@${domain}`;
-}
-async function login(e){
-  e.preventDefault();
-  if(!supabaseReady) return alert('The service is temporarily unavailable. Please try again.');
-  const username=document.getElementById('username').value.trim();
-  const password=document.getElementById('password').value;
-  const button=e.submitter || e.target.querySelector('button');
-  if(button){button.disabled=true;}
-  try{
-    const loginResponse=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
-    const loginResult=await loginResponse.json().catch(()=>({}));
-    if(!loginResponse.ok || !loginResult?.session) throw new Error('Invalid username or password.');
-    const {error:setSessionError}=await supabaseClient.auth.setSession(loginResult.session);
-    if(setSessionError) throw setSessionError;
-    const data={user:loginResult.user,session:loginResult.session};
-    const error=null;
-    const {data:profile,error:profileError}=await supabaseClient.from('erp_profiles').select('id,email,username,full_name,role,active,force_password_change,company_id').eq('id',data.user.id).maybeSingle();
-    if(profileError) throw profileError;
-    if(!profile || profile.active===false) throw new Error('Your ERP account is inactive or has no ERP profile. Contact the administrator.');
-    if(supabaseConfig?.twoFactorEnabled===false){
-      session={id:profile.id,name:profile.full_name||data.user.user_metadata?.full_name||profile.username,email:data.user.email,username:profile.username,role:profile.role,companyId:profile.company_id,forcePasswordChange:!!profile.force_password_change};
-      await loadFromSupabase();
-      audit('Login','User signed in successfully');
-      render();
-      return;
-    }
-    const response=await fetch('/api/2fa',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${data.session.access_token}`},body:JSON.stringify({action:'send',email:data.user.email,name:profile.full_name||data.user.user_metadata?.full_name||'User'})});
-    const result=await response.json().catch(()=>({}));
-    await supabaseClient.auth.signOut();
-    if(!response.ok) throw new Error(result.error||'Could not send verification code.');
-    pending2FA={authUserId:data.user.id,email:data.user.email,name:profile.full_name||data.user.user_metadata?.full_name||'User',role:profile.role,challengeId:result.challengeId,expiresAt:result.expiresAt,password};
-    renderLogin();
-    setTimeout(()=>document.getElementById('twofaCode')?.focus(),50);
-  }catch(err){
-    try{ await supabaseClient.auth.signOut(); }catch{}
-    alert('Unable to sign in. Please check your username and password.');
-    if(button){button.disabled=false;button.textContent='Login';}
-  }
-}
-async function verify2FA(e){
-  e.preventDefault();
-  if(!pending2FA) return renderLogin();
-  const code=String(document.getElementById('twofaCode').value||'').replace(/\D/g,'').slice(0,6);
-  if(code.length!==6) return alert('Enter the 6-digit verification code.');
-  const button=e.submitter || e.target.querySelector('button');
-  if(button){button.disabled=true;button.textContent='Verifying…';}
-  try{
-    const response=await fetch('/api/2fa',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'verify',email:pending2FA.email,challengeId:pending2FA.challengeId,code})});
-    const result=await response.json().catch(()=>({}));
-    if(!response.ok) throw new Error(result.error||'Verification failed.');
-    const loginResult=await supabaseClient.auth.signInWithPassword({email:pending2FA.email,password:pending2FA.password});
-    if(loginResult.error || !loginResult.data?.user) throw new Error('Your password could not be revalidated. Please log in again.');
-    const {data:profile,error:profileError}=await supabaseClient.from('erp_profiles').select('id,email,username,full_name,role,active,force_password_change,company_id').eq('id',loginResult.data.user.id).maybeSingle();
-    if(profileError) throw profileError;
-    if(!profile || profile.active===false) throw new Error('Your ERP account is inactive.');
-    await loadFromSupabase();
-    session={id:profile.id,name:profile.full_name||loginResult.data.user.user_metadata?.full_name||profile.username,email:loginResult.data.user.email,username:profile.username,role:profile.role,companyId:profile.company_id,forcePasswordChange:!!profile.force_password_change};
-    pending2FA=null;
-    await loadFromSupabase();
-    audit('Login','User signed in successfully');
-    render();
-  }catch(err){
-    try{ await supabaseClient.auth.signOut(); }catch{}
-    alert('Verification failed. Please try again.');
-    if(button){button.disabled=false;button.textContent='Verify & Continue';}
-  }
-}
-async function resend2FA(){
-  if(!pending2FA) return renderLogin();
-  try{
-    // Resend requires a fresh successful Supabase Auth login, then the temporary session is immediately revoked.
-    const loginResult=await supabaseClient.auth.signInWithPassword({email:pending2FA.email,password:pending2FA.password});
-    if(loginResult.error || !loginResult.data?.session) throw new Error('Your login could not be revalidated. Please start again.');
-    const response=await fetch('/api/2fa',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${loginResult.data.session.access_token}`},body:JSON.stringify({action:'send',email:pending2FA.email,name:pending2FA.name})});
-    const result=await response.json().catch(()=>({}));
-    await supabaseClient.auth.signOut();
-    if(!response.ok) throw new Error(result.error||'Could not resend verification code.');
-    pending2FA.challengeId=result.challengeId;
-    pending2FA.expiresAt=result.expiresAt;
-    renderLogin();
-    setTimeout(()=>document.getElementById('twofaCode')?.focus(),50);
-    alert('A new verification code has been sent.');
-  }catch(err){ try{ await supabaseClient.auth.signOut(); }catch{}; alert('Could not resend the verification code. Please try again.'); }
-}
-function cancel2FA(){ pending2FA=null; renderLogin(); }
-async function logout(){
-  try{ if(supabaseClient) await supabaseClient.auth.signOut(); }catch(err){ console.warn(err); }
-  session=null; pending2FA=null; state=migrate(structuredClone(defaultData)); renderLogin();
-}
-function setMenuCollapsed(collapsed){
-  menuCollapsed=!!collapsed;
-  const shell=document.getElementById('erp-shell');
-  if(!shell) return;
-  shell.classList.toggle('menu-collapsed',menuCollapsed);
-  if(!menuCollapsed) shell.classList.remove('menu-open');
-}
-function toggleMenu(){
-  const shell=document.getElementById('erp-shell');
-  if(!shell) return;
-  if(shell.classList.contains('menu-collapsed')){
-    menuCollapsed=false;
-    shell.classList.remove('menu-collapsed','menu-open');
-  }else{
-    menuCollapsed=true;
-    shell.classList.add('menu-collapsed');
-    shell.classList.remove('menu-open');
-  }
-}
-function revealMenu(){
-  const shell=document.getElementById('erp-shell');
-  if(!shell || !shell.classList.contains('menu-collapsed')) return;
-  shell.classList.add('menu-open');
-}
-if(!menuPointerBound){
-  document.addEventListener('mousemove',e=>{ if(e.clientX<=14) revealMenu(); });
-  menuPointerBound=true;
-}
-function go(p){ currentPage=p; menuCollapsed=true; render(); }
+function login(e){ e.preventDefault(); const emailEl=document.getElementById('email'); const passEl=document.getElementById('password'); const u=state.users.find(x=>x.email===emailEl.value.trim() && x.password===passEl.value && x.active); if(!u) return alert('Invalid login'); session={id:u.id,name:u.name,email:u.email,role:u.role}; localStorage.setItem('businessERP.session',JSON.stringify(session)); audit('Login','User logged in'); render(); }
+function logout(){ localStorage.removeItem('businessERP.session'); session=null; renderLogin(); }
+function go(p){ currentPage=p; render(); }
 function page(html){ document.getElementById('page').innerHTML=html; }
 function table(head,rows){ return `<div class="table-wrap"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${(rows&&rows.length?rows:[[...Array(head.length)].map((_,i)=>i?'':'No records')]).map(r=>`<tr>${r.map(c=>`<td>${c??''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`; }
 function metric(title,value,sub=''){ return `<div class="card metric"><h3>${title}</h3><strong>${value}</strong><span>${sub}</span></div>`; }
@@ -610,123 +337,7 @@ function statusBadge(status){
 function bankReadyForAutoPay(){ return state.settings.bankApiStatus==='Fully Connected'; }
 
 
-
-let userManagementCache=[];
-async function userApi(action,payload={}){
-  const {data}=await supabaseClient.auth.getSession();
-  const token=data?.session?.access_token;
-  if(!token) throw new Error('Your administrator session has expired. Please log in again.');
-  const r=await fetch('/api/users',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},
-    body:JSON.stringify({action,...payload})
-  });
-  const result=await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(result.error||'User management request failed.');
-  return result;
-}
-async function loadUsers(){
-  if(role()!=='Admin / Owner') return;
-  const result=await userApi('list');
-  userManagementCache=result.users||[];
-  return userManagementCache;
-}
-function userRoleOptions(selected){
-  return ['Admin / Owner','Accountant','Supervisor','Cashier / Sales Clerk'].map(r=>`<option ${r===selected?'selected':''}>${r}</option>`).join('');
-}
-async function renderUserManagement(){
-  page(`<div class="card"><div class="section-title"><div><h3>User Management</h3></div><button class="btn" onclick="openCreateUserModal()">+ Create User</button></div><div id="usersPanel"><div class="notice">Loading users…</div></div></div>`);
-  try{ await loadUsers(); renderUsersTable(); }catch(err){ document.getElementById('usersPanel').innerHTML=`<div class="notice" style="background:#fee2e2;color:#991b1b">${esc(err.message)}</div>`; }
-}
-function renderUsersTable(){
-  const panel=document.getElementById('usersPanel'); if(!panel) return;
-  const rows=userManagementCache.map(u=>[
-    `<b>${esc(u.full_name||'')}</b>`,
-    esc(u.username||''),
-    esc(u.email),
-    esc(u.role),
-    statusBadge(u.active?'Active':'Disabled'),
-    u.lastSignIn?new Date(u.lastSignIn).toLocaleString():'Never',
-    `<div class="actions">
-      <button class="btn ghost small" onclick="openEditUserModal('${u.id}')">Edit</button>
-      <button class="btn warn small" onclick="openResetUserModal('${u.id}')">Reset Password</button>
-      ${u.id===session.id?'':u.active?`<button class="btn bad small" onclick="toggleUserStatus('${u.id}',false)">Disable</button>`:`<button class="btn good small" onclick="toggleUserStatus('${u.id}',true)">Enable</button>`}
-    </div>`
-  ]);
-  panel.innerHTML=table(['Name','Username','Email','Role','Status','Last login','Actions'],rows)+'';
-}
-function openCreateUserModal(){
-  modal(`<h3>Create User</h3><div class="two-col-form"><div class="form-row"><label>Full Name</label><input id="umName" autocomplete="name" oninput="previewGeneratedUsername()" required></div><div class="form-row"><label>Username</label><input id="umUsername" value="Generated automatically" readonly disabled style="background:#eef5ff;color:#1557a6;font-weight:700"></div><div class="form-row"><label>Email</label><input id="umEmail" type="email" required></div><div class="form-row"><label>Role</label><select id="umRole">${userRoleOptions('Cashier / Sales Clerk')}</select></div></div><div id="generatedUsernamePreview" style="margin-top:10px;font-size:13px;color:#64748b">Enter the full name and the system will generate a unique username.</div><div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn" onclick="createUser()">Create User</button></div>`);
-}
-function generatedUsernameFromName(name){
-  const words=String(name||'').trim().toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(Boolean);
-  if(!words.length) return '';
-  if(words.length===1) return words[0].slice(0,40);
-  const initial=words[0].charAt(0);
-  const surname=words[words.length-1];
-  return `${initial}${surname}`.slice(0,40);
-}
-function previewGeneratedUsername(){
-  const name=document.getElementById('umName')?.value||'';
-  const base=generatedUsernameFromName(name);
-  const field=document.getElementById('umUsername');
-  const preview=document.getElementById('generatedUsernamePreview');
-  if(field) field.value=base||'Generated automatically';
-  if(preview) preview.textContent=base?`Username to be generated: ${base} (the system will add a number if needed).`:'Enter the full name and the system will generate a unique username.';
-}
-async function copyTemporaryPassword(password,button){
- try{ await navigator.clipboard.writeText(password); const old=button.innerHTML; button.innerHTML='Copied'; setTimeout(()=>button.innerHTML=old,1400); }
- catch(e){ const input=document.createElement('textarea'); input.value=password; document.body.appendChild(input); input.select(); document.execCommand('copy'); input.remove(); button.innerHTML='Copied'; setTimeout(()=>button.innerHTML='Copy Password',1400); }
-}
-async function shareTemporaryPassword(username,password){
- const text=`AriQ Digital ERP login\nUsername: ${username}\nTemporary password: ${password}\n\nPlease log in and change the temporary password when prompted.`;
- if(navigator.share){ try{ await navigator.share({title:'AriQ Digital ERP Login',text}); return; }catch(e){} }
- try{ await navigator.clipboard.writeText(text); alert('Login details copied. You can paste them into WhatsApp, SMS, email or any other app.'); }
- catch(e){ alert(text); }
-}
-function passwordResultModal(title,username,password){
- const safeUser=String(username||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
- const safePass=String(password||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
- modal(`<h3>${title}</h3><p>Share these login details with <b>${esc(username||'')}</b>.</p><div class="card" style="margin-top:12px;padding:16px;background:#f8fafc"><div><b>Username:</b> ${esc(username||'')}</div><div style="margin-top:10px"><div style="font-size:12px;color:#64748b">TEMPORARY PASSWORD</div><div style="font-size:22px;font-weight:800;word-break:break-all">${esc(password||'')}</div></div></div><div class="actions" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" onclick="copyTemporaryPassword('${safePass}',this)">Copy Password</button><button class="btn" onclick="shareTemporaryPassword('${safeUser}','${safePass}')">Share Login Details</button><button class="btn good" onclick="this.closest('.modal-backdrop').remove()">Done</button></div>`);
-}
-async function createUser(){
- const name=document.getElementById('umName')?.value.trim(),email=document.getElementById('umEmail')?.value.trim().toLowerCase(),roleName=document.getElementById('umRole')?.value;
- if(!name||!email||!roleName) return alert('Complete all fields.');
- try{ const result=await userApi('create',{fullName:name,email,role:roleName}); const username=result.username||result.user?.username||generatedUsernameFromName(name); document.querySelector('.modal-backdrop')?.remove(); await loadUsers(); renderUsersTable(); audit('User created',`${name} (${username}) — ${roleName}`); passwordResultModal('User Created',username,result.temporaryPassword||''); }catch(err){alert(err?.message||'The request could not be completed. Please try again.');}
-}
-
-function findManagedUser(id){ return userManagementCache.find(u=>u.id===id); }
-function openEditUserModal(id){
- const u=findManagedUser(id); if(!u) return;
- modal(`<h3>Edit User</h3><div class="two-col-form"><div class="form-row"><label>Username</label><input id="euUsername" value="${esc(u.username||'')}" readonly></div><div class="form-row"><label>Full Name</label><input id="euName" value="${esc(u.full_name||'')}"></div><div class="form-row"><label>Email</label><input id="euEmail" type="email" value="${esc(u.email||'')}"></div><div class="form-row"><label>Role</label><select id="euRole">${userRoleOptions(u.role)}</select></div></div><div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn" onclick="saveUserEdit('${u.id}')">Save Changes</button></div>`);
-}
-async function saveUserEdit(id){
-  const name=document.getElementById('euName')?.value.trim(), username=document.getElementById('euUsername')?.value.trim(), email=document.getElementById('euEmail')?.value.trim().toLowerCase(), roleName=document.getElementById('euRole')?.value, password=document.getElementById('euPassword')?.value;
-  if(!name||!email) return alert('Name and email are required.');
-  try{
-    await userApi('update',{id,username,fullName:name,email,role:roleName,password:password||undefined});
-    document.querySelector('.modal-backdrop')?.remove();
-    await loadUsers(); renderUsersTable(); audit('User updated',`${name} (${email}) — ${roleName}`); alert('User updated.');
-  }catch(err){ alert('The request could not be completed. Please try again.'); }
-}
-function openResetUserModal(id){ const u=findManagedUser(id); if(!u) return; modal(`<h3>Reset Password</h3><p>Username: <b>${esc(u.username||'')}</b></p><div class="actions" style="justify-content:flex-end"><button class="btn ghost" onclick="this.closest('.modal-backdrop').remove()">Cancel</button><button class="btn warn" onclick="resetManagedPassword('${u.id}')">Generate Temporary Password</button></div>`); }
-async function resetManagedPassword(id){
- try{ const result=await userApi('resetPassword',{id}); document.querySelector('.modal-backdrop')?.remove(); const u=findManagedUser(id); audit('User password reset',u?.username||id); passwordResultModal('Password Reset',u?.username||result.username||'',result.temporaryPassword||''); }
- catch(err){alert('The request could not be completed. Please try again.');}
-}
-
-async function toggleUserStatus(id,active){
-  const u=findManagedUser(id); if(!u) return;
-  const action=active?'enable':'disable';
-  if(!confirm(`${active?'Enable':'Disable'} ${u.email}?`)) return;
-  try{
-    await userApi('setStatus',{id,active});
-    await loadUsers(); renderUsersTable(); audit(`User ${action}d`,u.email); alert(`Account ${active?'enabled':'disabled'}.`);
-  }catch(err){ alert('The request could not be completed. Please try again.'); }
-}
-
 const pages={
-  users(){ renderUserManagement(); },
   dashboard(){
     const todays=state.invoices.filter(inv=>inv.date===today() && (isAccountingUser() || inv.user===session.name));
     const paid=todays.reduce((a,inv)=>a+n(inv.paidBase),0);
@@ -744,7 +355,7 @@ const pages={
   },
   pos(){
     saleCart=saleCart||[];
-    page(`<div class="grid cols-2"><div class="card"><h3>Create Invoice / Cash Sale</h3><div class="notice"><b>EFT rule:</b> Accountant must approve EFT money first. When cashier selects EFT, the approved balance for the selected customer is shown and can be used.</div><div class="two-col-form"><div class="form-row"><label>Customer</label><select id="saleCustomer" onchange="updateEftNotice()">${option(state.customers)}</select></div><div class="form-row"><label>Sale Type</label><select id="saleType"><option>Cash Sale</option><option>Credit Sale</option><option>Invoice</option></select></div><div class="form-row"><label>Stock Deduction</label><select id="deductMode"><option value="sale">Deduct at point of sale</option><option value="dispatch">Deduct at point of dispatch</option></select></div><div class="form-row"><label>Currency</label><select id="saleCurrency" onchange="renderSaleCart()">${state.settings.currencies.map(c=>`<option>${c}</option>`).join('')}</select></div><div class="form-row"><label>Payment Method</label><select id="salePay" onchange="updateEftNotice()"><option>Cash</option><option>Bank</option><option>EcoCash/mobile money</option><option>POS/swipe</option><option>EFT</option><option>Credit sale</option></select></div><div class="form-row"><label>Amount Paid</label><input id="salePaid" type="number" step="0.01" value="0"></div><div class="form-row"><label>Delivery Address</label><input id="saleDelivery" placeholder="Delivery address / collection details"></div><div class="form-row"><label>Driver / Vehicle</label><input id="saleDriver" placeholder="Driver name, vehicle reg"></div></div><div id="eftNotice" class="hint"></div><hr><div class="two-col-form"><div class="form-row"><label>Product</label><select id="lineProduct" onchange="syncLineProduct()">${option(state.products)}</select></div><div class="form-row"><label>Batch</label><select id="lineCarcass"></select></div><div class="form-row"><label>Quantity</label><input id="lineQuantity" type="number" step="0.01" value="10"></div><div class="form-row"><label>Unit price</label><input id="linePrice" type="number" step="0.01"></div><div class="form-row"><label>Discount</label><input id="lineDiscount" type="number" step="0.01" value="0"></div><div class="form-row"><label>Notes</label><input id="lineNotes"></div></div><div class="actions"><button class="btn ghost" onclick="addSaleLine()">Add to Receipt</button><button class="btn ghost" onclick="saleCart=[];loadedQuoteId=null;render()">Clear</button></div></div><div class="card"><h3>Current Invoice ${loadedQuoteId?`from Quotation #${loadedQuoteId}`:''}</h3><div id="saleCartBox"></div></div></div><br><div class="card"><h3>Invoices Waiting for Dispatch</h3>${dispatchTable()}</div><br><div class="card"><h3>Recent Invoices</h3>${invoiceTable(state.invoices.slice(-10).reverse())}</div>`);
+    page(`<div class="grid cols-2"><div class="card"><h3>Create Invoice / Cash Sale</h3><div class="notice"><b>EFT rule:</b> Accountant must approve EFT money first. When cashier selects EFT, the approved balance for the selected customer is shown and can be used.</div><div class="two-col-form"><div class="form-row"><label>Customer</label><select id="saleCustomer" onchange="updateEftNotice()">${option(state.customers)}</select></div><div class="form-row"><label>Sale Type</label><select id="saleType"><option>Cash Sale</option><option>Credit Sale</option><option>Invoice</option></select></div><div class="form-row"><label>Stock Deduction</label><select id="deductMode"><option value="sale">Deduct at point of sale</option><option value="dispatch">Deduct at point of dispatch</option></select></div><div class="form-row"><label>Currency</label><select id="saleCurrency" onchange="renderSaleCart()">${state.settings.currencies.map(c=>`<option>${c}</option>`).join('')}</select></div><div class="form-row"><label>Payment Method</label><select id="salePay" onchange="updateEftNotice()"><option>Cash</option><option>Bank</option><option>EcoCash/mobile money</option><option>POS/swipe</option><option>EFT</option><option>Credit sale</option></select></div><div class="form-row"><label>Amount Paid</label><input id="salePaid" type="number" step="0.01" value="0"></div><div class="form-row"><label>Delivery Address</label><input id="saleDelivery" placeholder="Delivery address / collection details"></div><div class="form-row"><label>Driver / Vehicle</label><input id="saleDriver" placeholder="Driver name, vehicle reg"></div></div><div id="eftNotice" class="hint"></div><hr><div class="two-col-form"><div class="form-row"><label>Product</label><select id="lineProduct" onchange="syncLineProduct()">${option(state.products)}</select></div><div class="form-row"><label>Batch</label><select id="lineCarcass"></select></div><div class="form-row"><label>Quantity</label><input id="lineQuantity" type="number" step="0.01" value="10"></div><div class="form-row"><label>Unit price</label><input id="linePrice" type="number" step="0.01"></div><div class="form-row"><label>Discount</label><input id="lineDiscount" type="number" step="0.01" value="0"></div><div class="form-row"><label>Notes</label><input id="lineNotes"></div></div><div class="actions"><button class="btn ghost" onclick="addSaleLine()">Add Product</button><button class="btn ghost" onclick="saleCart=[];loadedQuoteId=null;render()">Clear</button></div></div><div class="card"><h3>Current Invoice ${loadedQuoteId?`from Quotation #${loadedQuoteId}`:''}</h3><div id="saleCartBox"></div></div></div><br><div class="card"><h3>Invoices Waiting for Dispatch</h3>${dispatchTable()}</div><br><div class="card"><h3>Recent Invoices</h3>${invoiceTable(state.invoices.slice(-10).reverse())}</div>`);
     syncLineProduct(); renderSaleCart(); updateEftNotice();
   },
   quotations(){ page(`<div class="card"><div class="section-title"><h3>Quotations / Proformas</h3><button class="btn" onclick="openQuoteModal()">New Quotation</button></div><div class="notice">Quotations support many different products and can be edited before being converted into an invoice.</div>${quoteTable()}</div>`); },
@@ -764,12 +375,12 @@ const pages={
   audit(){ page(`<div class="card"><h3>Audit Logs</h3>${table(['Date/time','User','Role','Action requested','Details','Approved/Disapproved by','Final status','Reason'],state.auditLogs.map(a=>[a.date,a.user,a.role,a.action,a.details,a.approvedBy||'',a.finalStatus||'Recorded',a.reason||'']))}</div>`); }
 };
 
-function settingsHtml(){ return `<div class="grid cols-2"><div class="card"><h3>Company</h3><div class="two-col-form"><div class="form-row"><label>Company Name</label><input id="setCompany" value="${esc(state.settings.companyName)}"></div><div class="form-row"><label>Trading Name</label><input id="setTrading" value="${esc(state.settings.tradingName||'')}"></div><div class="form-row"><label>Phone</label><input id="setPhone" value="${esc(state.settings.phone)}"></div><div class="form-row"><label>Phone 2</label><input id="setPhone2" value="${esc(state.settings.phone2||'')}"></div><div class="form-row"><label>Email</label><input id="setEmail" type="email" value="${esc(state.settings.email||'')}"></div><div class="form-row"><label>Website</label><input id="setWebsite" value="${esc(state.settings.website||'')}"></div><div class="form-row"><label>Address</label><input id="setAddress" value="${esc(state.settings.address)}"></div><div class="form-row"><label>City</label><input id="setCity" value="${esc(state.settings.city||'')}"></div><div class="form-row"><label>Country</label><input id="setCountry" value="${esc(state.settings.country||'Zimbabwe')}"></div><div class="form-row"><label>Registration Number</label><input id="setReg" value="${esc(state.settings.registrationNumber||'')}"></div><div class="form-row"><label>TIN</label><input id="setTin" value="${esc(state.settings.tin)}"></div><div class="form-row"><label>VAT Number</label><input id="setVatNo" value="${esc(state.settings.vatNumber)}"></div><div class="form-row"><label>VAT Registered</label><select id="setVat"><option ${state.settings.vatRegistered?'':'selected'}>No</option><option ${state.settings.vatRegistered?'selected':''}>Yes</option></select></div><div class="form-row"><label>VAT Rate %</label><input id="setVatRate" type="number" step="0.01" value="${state.settings.vatRate}"></div><div class="form-row"><label>VAT Method</label><select id="setVatMethod"><option ${state.settings.vatMethod==='exclusive'?'selected':''}>exclusive</option><option ${state.settings.vatMethod==='inclusive'?'selected':''}>inclusive</option></select></div><div class="form-row"><label>Logo URL</label><input id="setLogo" value="${esc(state.settings.logoUrl||'')}"></div><div class="form-row"><label>Payment Details</label><input id="setPayment" value="${esc(state.settings.paymentDetails||'')}"></div><div class="form-row"><label>Document Footer</label><input id="setFooter" value="${esc(state.settings.invoiceFooter||'')}"></div></div><button class="btn" onclick="saveSettings()">Save Settings</button></div><div class="card"><h3>ZIMRA Fiscalisation</h3><div class="two-col-form"><div class="form-row"><label>Fiscalisation enabled</label><select id="setFiscal"><option ${state.settings.fiscalEnabled?'':'selected'}>No</option><option ${state.settings.fiscalEnabled?'selected':''}>Yes</option></select></div><div class="form-row"><label>Mode</label><select id="setFiscalMode"><option ${state.settings.fiscalMode==='Disabled'?'selected':''}>Disabled</option><option ${state.settings.fiscalMode==='Test'?'selected':''}>Test</option><option ${state.settings.fiscalMode==='Live'?'selected':''}>Live</option></select></div><div class="form-row"><label>Device ID</label><input id="setDevice" value="${esc(state.settings.fiscalDeviceId)}"></div><div class="form-row"><label>Device Serial</label><input id="setSerial" value="${esc(state.settings.fiscalSerial)}"></div><div class="form-row"><label>Activation Key</label><input id="setActivation" value="${esc(state.settings.activationKey)}"></div><div class="form-row"><label>ZIMRA API Endpoint</label><input id="setEndpoint" value="${esc(state.settings.zimraEndpoint)}"></div></div><button class="btn" onclick="saveSettings()">Save Settings</button></div></div>`; }
+function settingsHtml(){ return `<div class="grid cols-2"><div class="card"><h3>Company & Tax Settings</h3><div class="two-col-form"><div class="form-row"><label>Company Name</label><input id="setCompany" value="${esc(state.settings.companyName)}"></div><div class="form-row"><label>Phone</label><input id="setPhone" value="${esc(state.settings.phone)}"></div><div class="form-row"><label>Address</label><input id="setAddress" value="${esc(state.settings.address)}"></div><div class="form-row"><label>VAT Registered</label><select id="setVat"><option ${state.settings.vatRegistered?'':'selected'}>No</option><option ${state.settings.vatRegistered?'selected':''}>Yes</option></select></div><div class="form-row"><label>VAT Number</label><input id="setVatNo" value="${esc(state.settings.vatNumber)}"></div><div class="form-row"><label>TIN</label><input id="setTin" value="${esc(state.settings.tin)}"></div><div class="form-row"><label>VAT Rate %</label><input id="setVatRate" type="number" step="0.01" value="${state.settings.vatRate}"></div><div class="form-row"><label>VAT Method</label><select id="setVatMethod"><option ${state.settings.vatMethod==='exclusive'?'selected':''}>exclusive</option><option ${state.settings.vatMethod==='inclusive'?'selected':''}>inclusive</option></select></div></div><button class="btn" onclick="saveSettings()">Save Settings</button></div><div class="card"><h3>ZIMRA Fiscalisation Readiness</h3><div class="two-col-form"><div class="form-row"><label>Fiscalisation enabled</label><select id="setFiscal"><option ${state.settings.fiscalEnabled?'':'selected'}>No</option><option ${state.settings.fiscalEnabled?'selected':''}>Yes</option></select></div><div class="form-row"><label>Mode</label><select id="setFiscalMode"><option ${state.settings.fiscalMode==='Disabled'?'selected':''}>Disabled</option><option ${state.settings.fiscalMode==='Test'?'selected':''}>Test</option><option ${state.settings.fiscalMode==='Live'?'selected':''}>Live</option></select></div><div class="form-row"><label>Device ID</label><input id="setDevice" value="${esc(state.settings.fiscalDeviceId)}"></div><div class="form-row"><label>Device Serial</label><input id="setSerial" value="${esc(state.settings.fiscalSerial)}"></div><div class="form-row"><label>Activation Key</label><input id="setActivation" value="${esc(state.settings.activationKey)}"></div><div class="form-row"><label>ZIMRA API Endpoint</label><input id="setEndpoint" value="${esc(state.settings.zimraEndpoint)}"></div></div><div class="notice">This module stores test/live fiscal settings and queues fiscal transactions. Actual FDMS submission requires certified API credentials and production integration.</div></div></div>`; }
 function saveSettings(){
   if(!requireFields([[setCompany,'Company name'],[setPhone,'Phone'],[setAddress,'Address'],[setVat,'VAT registered'],[setVatRate,'VAT rate','number',-1],[setVatMethod,'VAT method'],[setFiscal,'Fiscalisation enabled'],[setFiscalMode,'Fiscal mode']])) return;
   if(setVat.value==='Yes' && !requireFields([[setVatNo,'VAT number'],[setTin,'TIN']])) return;
   if(setFiscal.value==='Yes' && !requireFields([[setDevice,'Fiscal device ID'],[setSerial,'Fiscal device serial'],[setActivation,'Activation key'],[setEndpoint,'ZIMRA API endpoint']])) return;
-  state.settings.companyName=setCompany.value; state.settings.tradingName=setTrading.value; state.settings.phone=setPhone.value; state.settings.phone2=setPhone2.value; state.settings.email=setEmail.value; state.settings.website=setWebsite.value; state.settings.address=setAddress.value; state.settings.city=setCity.value; state.settings.country=setCountry.value; state.settings.registrationNumber=setReg.value; state.settings.logoUrl=setLogo.value; state.settings.paymentDetails=setPayment.value; state.settings.invoiceFooter=setFooter.value; state.settings.vatRegistered=setVat.value==='Yes'; state.settings.vatNumber=setVatNo.value; state.settings.tin=setTin.value; state.settings.vatRate=n(setVatRate.value); state.settings.vatMethod=setVatMethod.value; state.settings.fiscalEnabled=setFiscal.value==='Yes'; state.settings.fiscalMode=setFiscalMode.value; state.settings.fiscalDeviceId=setDevice.value; state.settings.fiscalSerial=setSerial.value; state.settings.activationKey=setActivation.value; state.settings.zimraEndpoint=setEndpoint.value; audit('Settings changed','Tax/fiscal/company settings updated'); save(); alert('Settings saved'); render(); }
+  state.settings.companyName=setCompany.value; state.settings.phone=setPhone.value; state.settings.address=setAddress.value; state.settings.vatRegistered=setVat.value==='Yes'; state.settings.vatNumber=setVatNo.value; state.settings.tin=setTin.value; state.settings.vatRate=n(setVatRate.value); state.settings.vatMethod=setVatMethod.value; state.settings.fiscalEnabled=setFiscal.value==='Yes'; state.settings.fiscalMode=setFiscalMode.value; state.settings.fiscalDeviceId=setDevice.value; state.settings.fiscalSerial=setSerial.value; state.settings.activationKey=setActivation.value; state.settings.zimraEndpoint=setEndpoint.value; audit('Settings changed','Tax/fiscal/company settings updated'); save(); alert('Settings saved'); render(); }
 
 function renderAccounting(){
   const tabs=[['overview','Overview'],['gl','General Ledger'],['coa','Chart of Accounts'],['journal','Journal Entries'],['ar','Accounts Receivable'],['ap','Accounts Payable'],['cashbook','Cashbook'],['bankledger','Bank Ledger'],['expenses','Expenses'],['payroll','Payroll'],['eft','EFT Approvals'],['bank','Bank Sync & Payments'],['recon','Bank Reconciliation'],['assets','Asset Register'],['reports','Reports'],['acctset','Accounting Settings']];
@@ -798,7 +409,7 @@ function syncLineProduct(){ const p=product(lineProduct?.value); if(!p) return; 
 function addSaleLine(){
   if(!requireFields([[lineProduct,'Product'],[lineQuantity,'Quantity','number',0],[linePrice,'Unit price','number',0]])) return;
   const p=product(lineProduct.value); if(!p) return showFormError('Select a valid product.');
-  const item={id:Date.now(),productId:p.id,productName:p.name,carcassId:lineCarcass?.value||'',qty:n(lineQuantity.value),price:n(linePrice.value),discount:n(lineDiscount.value),notes:lineNotes.value,cost:p.cost};
+  const item={id:Date.now(),productId:p.id,productName:p.name,carcassId:lineBatch.value,qty:n(lineQuantity.value),price:n(linePrice.value),discount:n(lineDiscount.value),notes:lineNotes.value,cost:p.cost};
   const existing=saleCart.find(l=>l.productId===item.productId);
   if(existing){
     existing.qty=n(existing.qty)+n(item.qty);
@@ -814,7 +425,7 @@ function renderSaleCart(){
   const rows=saleCart.map((l,i)=>[l.productName,qty(l.qty),money(l.price),money(l.discount),money(l.qty*l.price-l.discount),`<button class="btn small bad" onclick="saleCart.splice(${i},1);renderSaleCart()">Remove</button>`]);
   const totals=calcLines(saleCart);
   const complete=saleCart.length>0 && document.getElementById('saleCustomer');
-  saleCartBox.innerHTML=`${table(['Product','Quantity','Unit price','Discount','Total',''],rows)}<div class="totals"><div><b>Subtotal:</b><b>${money(totals.subtotal, saleCurrency?.value||'USD')}</b></div><div><b>VAT:</b><b>${money(totals.vat, saleCurrency?.value||'USD')}</b></div><div><b>Total:</b><b>${money(totals.total, saleCurrency?.value||'USD')}</b></div></div><div class="actions" style="margin-top:14px"><button id="postInvoiceBtn" class="btn" ${complete?'':'disabled'} onclick="completeSale()">Post Invoice / Receipt</button></div>`;
+  saleCartBox.innerHTML=`${table(['Product','Quantity','Unit price','Discount','Total',''],rows)}<div class="totals"><div><b>Subtotal:</b><b>${money(totals.subtotal, saleCurrency?.value||'USD')}</b></div><div><b>VAT:</b><b>${money(totals.vat, saleCurrency?.value||'USD')}</b></div><div><b>Total:</b><b>${money(totals.total, saleCurrency?.value||'USD')}</b></div></div><div class="actions" style="margin-top:14px"><button id="postInvoiceBtn" class="btn" ${complete?'':'disabled'} onclick="completeSale()">Post Invoice / Receipt</button></div><p class="hint">The Post Invoice / Receipt button is placed under the current invoice and is blocked until required invoice details are complete.</p>`;
 }
 function calcLines(lines){ const subtotal=lines.reduce((a,l)=>a+(n(l.qty)*n(l.price)-n(l.discount)),0); const vat=state.settings.vatRegistered? subtotal*n(state.settings.vatRate)/100:0; return {subtotal,vat,total:subtotal+vat}; }
 function updateEftNotice(){ if(!document.getElementById('eftNotice')) return; const cid=Number(saleCustomer.value); const bal=approvedEftBalance(cid); eftNotice.innerHTML=`Approved EFT balance for this customer: <b>${money(bal)}</b>${salePay.value==='EFT'?' — EFT can only proceed up to this approved amount.':''}`; }
@@ -875,7 +486,7 @@ function dispatchTable(){
   return table(['Invoice','Customer','Total','Delivery','Driver','Status','Action'],state.invoices.filter(i=>i.status==='Pending Dispatch').map(i=>[i.invoice,customer(i.customerId)?.name,money(i.total,i.currency),i.delivery,i.driver,statusBadge(i.status),canDispatch?`<button class="btn small" onclick="dispatchInvoice(${i.id})">Dispatch</button>`:'Restricted']));
 }
 function invoiceTable(list){ return table(['Date','Invoice','Customer','Type','Total','Paid','Status','Print'],(list||[]).map(i=>[i.date,i.invoice,customer(i.customerId)?.name,i.type,money(i.total,i.currency),money(i.paid,i.currency),i.status,`<button class="btn small ghost" onclick="printInvoice(${i.id})">Print 2 Copies</button>`])); }
-function printInvoice(id,deliveryOnly=false){ const inv=state.invoices.find(x=>x.id==id); if(!inv) return; const cust=customer(inv.customerId); const items=state.invoiceItems.filter(i=>i.invoiceId==id); const copy=(title)=>`<section class="print-copy"><div style="text-align:center">${state.settings.logoUrl?`<img src="${esc(state.settings.logoUrl)}" style="max-height:70px;max-width:220px">`:''}<h2>${esc(state.settings.companyName||state.settings.tradingName||'')}</h2><div>${esc(state.settings.address||'')} ${esc(state.settings.city||'')} ${esc(state.settings.country||'')}<br>${esc(state.settings.phone||'')} ${esc(state.settings.phone2||'')} ${esc(state.settings.email||'')} ${esc(state.settings.website||'')}<br>${state.settings.registrationNumber?`Reg: ${esc(state.settings.registrationNumber)} `:''}${state.settings.tin?`TIN: ${esc(state.settings.tin)} `:''}${state.settings.vatNumber?`VAT: ${esc(state.settings.vatNumber)}`:''}</div></div><h3>${title}</h3><p><b>Invoice:</b> ${inv.invoice}<br><b>Date:</b> ${inv.date}<br><b>Customer:</b> ${esc(cust?.name)}<br><b>Delivery:</b> ${esc(inv.delivery||'Collection')}<br><b>Driver/Vehicle:</b> ${esc(inv.driver||'')}</p><table><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th><th>Total</th></tr></thead><tbody>${items.map(l=>`<tr><td>${esc(l.productName)}</td><td>${qty(l.qty)}</td><td>${money(l.price,inv.currency)}</td><td>${money(n(l.qty)*n(l.price)-n(l.discount),inv.currency)}</td></tr>`).join('')}</tbody></table><p><b>Subtotal:</b> ${money(inv.subtotal,inv.currency)}<br><b>VAT:</b> ${money(inv.vat,inv.currency)}<br><b>Total:</b> ${money(inv.total,inv.currency)}<br><b>Paid:</b> ${money(inv.paid,inv.currency)}</p>${title.includes('Delivery')?'<p style="margin-top:40px">Received by: ____________________ Signature: ____________________ Date: ____________</p>':''}</section>`; const html=`<!doctype html><html><head><title>${inv.invoice}</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ddd;padding:8px;text-align:left}.print-copy{page-break-after:always;border:1px solid #ddd;padding:20px;margin-bottom:20px}</style></head><body>${copy('CUSTOMER COPY')}${copy('DELIVERY RETURN COPY')}</body></html>`; const w=window.open('','_blank'); w.document.write(html); w.document.close(); w.focus(); w.print(); }
+function printInvoice(id,deliveryOnly=false){ const inv=state.invoices.find(x=>x.id==id); if(!inv) return; const cust=customer(inv.customerId); const items=state.invoiceItems.filter(i=>i.invoiceId==id); const copy=(title)=>`<section class="print-copy"><h2>${esc(state.settings.companyName)}</h2><h3>${title}</h3><p><b>Invoice:</b> ${inv.invoice}<br><b>Date:</b> ${inv.date}<br><b>Customer:</b> ${esc(cust?.name)}<br><b>Delivery:</b> ${esc(inv.delivery||'Collection')}<br><b>Driver/Vehicle:</b> ${esc(inv.driver||'')}</p><table><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th><th>Total</th></tr></thead><tbody>${items.map(l=>`<tr><td>${esc(l.productName)}</td><td>${qty(l.qty)}</td><td>${money(l.price,inv.currency)}</td><td>${money(n(l.qty)*n(l.price)-n(l.discount),inv.currency)}</td></tr>`).join('')}</tbody></table><p><b>Subtotal:</b> ${money(inv.subtotal,inv.currency)}<br><b>VAT:</b> ${money(inv.vat,inv.currency)}<br><b>Total:</b> ${money(inv.total,inv.currency)}<br><b>Paid:</b> ${money(inv.paid,inv.currency)}</p>${title.includes('Delivery')?'<p style="margin-top:40px">Received by: ____________________ Signature: ____________________ Date: ____________</p>':''}</section>`; const html=`<!doctype html><html><head><title>${inv.invoice}</title><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ddd;padding:8px;text-align:left}.print-copy{page-break-after:always;border:1px solid #ddd;padding:20px;margin-bottom:20px}</style></head><body>${copy('CUSTOMER COPY')}${copy('DELIVERY RETURN COPY')}</body></html>`; const w=window.open('','_blank'); w.document.write(html); w.document.close(); w.focus(); w.print(); }
 
 function openQuoteModal(id=null){
   editQuoteId=id;
@@ -1113,16 +724,12 @@ function exportCsv(key){ const arr=state[key]||[]; if(!arr.length) return alert(
 function downloadBlob(blob,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); }
 
 initV6ScreenshotFeatures();
-(async()=>{
-  render();
-  const ok=await initSupabase();
-  render();
-})();
+render();
 
 
 /* --------------------------------------------------------------------------
    v6 Screenshot-inspired accounting workflow upgrades
-   These functions preserve the AriQ Digital ERP business logic while adding
+   These functions preserve the General Business ERP business logic while adding
    modern ERP patterns observed from the reference screenshots: close tasks,
    reconciliation workbench, report center, journal approval controls and
    financial dashboards. No source code, branding, logos or assets were copied.
