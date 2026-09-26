@@ -13,10 +13,8 @@ function cleanUsername(v){const s=String(v||'').trim(); if(!s) return null; if(/
 function usernameBaseFromName(name){
  const words=String(name||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(Boolean);
  if(!words.length) return 'user';
- if(words.length===1) return words[0].slice(0,40) || 'user';
- const initial=words[0].charAt(0);
- const surname=words[words.length-1];
- return `${initial}${surname}`.slice(0,40) || 'user';
+ const base=words.length===1?words[0]:`${words[0]}.${words[words.length-1]}`;
+ return base.slice(0,40) || 'user';
 }
 async function generateUniqueUsername(fullName){
  const base=usernameBaseFromName(fullName);
